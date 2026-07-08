@@ -6,7 +6,7 @@ Bu dosya, bu repoda çalışırken Claude Code'a (claude.ai/code) rehberlik eder
 
 **Dodge Runner** — yandan bakışlı (side-scroller), sonsuz koşu tarzında bir **Godot 4 masaüstü arcade oyunu**. Oyuncu sabit bir x-konumunda koşar, üstten ve alttan gelen engellerden zıplayarak veya eğilerek kaçar. Backend, sunucu veya veritabanı yoktur — tamamen yerel/çevrimdışı çalışır.
 
-> **Durum:** Proje şu anda yalnızca planlama/doküman aşamasındadır. `src/` altında henüz Godot projesi oluşturulmamıştır (bkz. `tasks/Tasks.md` Faz 0). Bu depoda kod üretmeden önce mutlaka `tasks/Tasks.md`'deki faz sırasını takip et.
+> **Not:** Projenin güncel ilerleme durumu `tasks/Tasks.md` içindeki işaretli (`- [x]`) kutucuklardan takip edilir; bu bilgi burada tekrar edilmez. Kod üretmeden önce mutlaka o dosyadaki faz sırasını ve işaretlenmiş kutucukları kontrol et.
 
 ## Önce Oku
 
@@ -28,7 +28,7 @@ Kod yazmadan önce şu dosyaları oku — bu CLAUDE.md onların özetidir, tam g
 | Kontrol | Klavye (Yukarı Ok: zıpla, Aşağı Ok: eğil) |
 | Veri Kalıcılığı | Yok (MVP kapsamında) |
 
-## Klasör Yapısı (Planlanan — `Architecture.md` §3)
+## Klasör Yapısı (bkz. `Architecture.md` §3)
 
 ```
 dodge-runner/
@@ -61,9 +61,9 @@ dodge-runner/
 
 ## Geliştirme Komutları
 
-Proje henüz `src/` altında oluşturulmadı. Godot projesi kurulduktan sonra geliştirme ve test doğrudan Godot Editor üzerinden yapılır; bu proje için harici bir CLI build/test komutu zorunlu değildir.
+Geliştirme ve test doğrudan Godot Editor üzerinden yapılır (proje kökü: `src/project.godot`); bu proje için harici bir CLI build/test komutu zorunlu değildir.
 
-Faz 0 tamamlanana kadar `src/` altında herhangi bir `.gd` veya `.tscn` dosyası oluşturulmamalıdır — önce `tasks/Tasks.md` Faz 0 maddelerini uygula.
+Bir sonraki fazın kodu, önceki faz tamamlanmadan yazılmamalıdır — `tasks/Tasks.md`'deki faz sırasını ve işaretlenmiş kutucukları kontrol et.
 
 ## Çalışma Kuralları
 

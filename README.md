@@ -4,13 +4,13 @@ Yandan bakışlı (side-scroller), sonsuz koşu tarzında bir 2D arcade oyunu. O
 
 ## Durum
 
-🚧 Bu proje şu anda **fikir/planlama aşamasında**. Kod geliştirme henüz başlamadı.
+🏗️ Bu proje aktif olarak geliştiriliyor. Godot 4 projesi kuruldu ve temel oyuncu mekanikleri (zıplama, eğilme) çalışıyor durumda.
 
 ## Proje Amacı
 
 Kısa sürede öğrenilebilen ama ustalaşması zor, klavye kontrollü bir refleks oyunu geliştirmek. Detaylar için [docs/PRD.md](docs/PRD.md) dosyasına bakınız.
 
-## Planlanan Teknoloji
+## Teknoloji
 
 - **Oyun Motoru:** Godot 4
 - **Dil:** GDScript

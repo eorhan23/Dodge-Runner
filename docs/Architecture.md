@@ -14,7 +14,7 @@ Dodge Runner, Godot 4 motoru ve GDScript ile geliştirilen, tek dosyalık bir ma
 | Kontrol | Klavye (Yukarı Ok: zıpla, Aşağı Ok: eğil) |
 | Veri Kalıcılığı | Yok (MVP kapsamında skor kaydı diske yazılmaz) |
 
-## 3. Klasör Yapısı (Planlanan)
+## 3. Klasör Yapısı
 
 ```
 dodge-runner/
@@ -37,10 +37,12 @@ dodge-runner/
 └── demo/                      # Sunum/demo materyalleri
 ```
 
+Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burada tutulmaz — güncel durum için `tasks/Tasks.md`'deki işaretli kutucuklara bakılmalıdır.
+
 ## 4. Sahne (Node) Mimarisi
 
 - **Main.tscn**: Kök sahne. `GameManager` ve `SpawnManager` autoload/singleton olarak proje ayarlarında tanımlanır, sahneye bağımlı değildir.
-- **Player.tscn**: `CharacterBody2D` kök node, altında `CollisionShape2D` (durum değişince — koşma/eğilme — boyutu değişir) ve görsel temsil (basit `ColorRect` veya `Sprite2D`).
+- **Player.tscn**: `CharacterBody2D` kök node, altında `CollisionShape2D` (durum değişince — koşma/eğilme — boyutu değişir) ve görsel temsil (basit `ColorRect` veya `Sprite2D`). Projede fiziksel bir zemin/`Ground` çarpışma gövdesi yoktur; dikey konum script içindeki mantıksal bir zemin sabitiyle yönetilir — bu, §7'deki Area2D-sinyal-tabanlı çarpışma felsefesiyle tutarlıdır.
 - **Obstacle.tscn**: `Area2D` kök node (fiziksel çarpma yerine sinyal tabanlı tespit tercih edilir — daha basit ve MVP'ye uygun), `body_entered` sinyali `GameManager`'a bağlanır.
 
 ## 5. Oyun Döngüsü Mantığı
@@ -65,5 +67,5 @@ dodge-runner/
 
 ## 8. Açık Sorular
 
-- Zıplama fiziksel mi (yerçekimi + zıplama kuvveti) yoksa animasyon tabanlı (tween/sabit eğri) mi olacak? — İlk prototipte fiziksel yaklaşım denenip test edilecek.
+- ~~Zıplama fiziksel mi (yerçekimi + zıplama kuvveti) yoksa animasyon tabanlı (tween/sabit eğri) mi olacak?~~ **Karar verildi:** Fiziksel yaklaşım (yerçekimi + zıplama hızı) uygulandı, bkz. `Player.gd`.
 - Skor tam olarak neye göre hesaplanacak (geçen süre mi, geçilen engel sayısı mı, ikisinin kombinasyonu mu)? — Geliştirme sırasında netleştirilecek, `Tasks.md` Faz 3'te ele alınacak.
