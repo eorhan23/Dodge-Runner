@@ -12,11 +12,11 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 1 — Karakter Mekaniği
 
-- [ ] `Player.tscn` sahnesini oluştur: `CharacterBody2D` kök node + `CollisionShape2D` + basit görsel (ColorRect veya Sprite2D placeholder).
-- [ ] `Player.gd` scriptini yaz: Yukarı Ok tuşuna basınca zıplama hareketi.
-- [ ] `Player.gd`'ye eğilme mantığını ekle: Aşağı Ok tuşuna basınca çarpışma şekli küçülür/alçalır.
-- [ ] Karakterin sabit x-konumunda kalmasını, yalnızca y ekseninde hareket etmesini sağla.
-- [ ] Zıplama ve eğilme arasında geçiş durumlarını (Running / Jumping / Ducking) basit bir state (durum) değişkeniyle yönet.
+- [x] `Player.tscn` sahnesini oluştur: `CharacterBody2D` kök node + `CollisionShape2D` + basit görsel (ColorRect veya Sprite2D placeholder).
+- [x] `Player.gd` scriptini yaz: Yukarı Ok tuşuna basınca zıplama hareketi.
+- [x] `Player.gd`'ye eğilme mantığını ekle: Aşağı Ok tuşuna basınca çarpışma şekli küçülür/alçalır.
+- [x] Karakterin sabit x-konumunda kalmasını, yalnızca y ekseninde hareket etmesini sağla.
+- [x] Zıplama ve eğilme arasında geçiş durumlarını (Running / Jumping / Ducking) basit bir state (durum) değişkeniyle yönet.
 
 ## Faz 2 — Engel Sistemi
 
