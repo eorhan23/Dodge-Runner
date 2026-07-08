@@ -22,7 +22,7 @@ Kısa sürede öğrenilebilen ama ustalaşması zor, klavye kontrollü bir refle
 | Dosya | İçerik |
 |---|---|
 | `docs/Problem.md` | Çözülmeye çalışılan problem ve motivasyon |
-| `docs/PRD.md` | Ürün gereksinimleri, kapsam, MVP sınırları |
+| `docs/PRD.md` | Ürün sürümleri, kapsam, MVP sınırları |
 | `docs/UserStories.md` | Kullanıcı hikayeleri ve kabul kriterleri |
 
 ## Kurulum
