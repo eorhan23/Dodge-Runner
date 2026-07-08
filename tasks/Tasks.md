@@ -20,11 +20,11 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 2 — Engel Sistemi
 
-- [ ] `Obstacle.tscn` sahnesini oluştur: `Area2D` kök node + `CollisionShape2D` + basit görsel.
-- [ ] `Obstacle.gd` scriptini yaz: `_process(delta)` içinde sabit hızla sola hareket.
-- [ ] En az 3-4 farklı engel varyasyonu tanımla (yükseklik/konum farkıyla): üstten gelen alçak engel, zeminden yükselen engel, çift engel kombinasyonu, farklı hızda engel.
-- [ ] `SpawnManager.gd` scriptini yaz: bir `Timer` node'u ile periyodik olarak rastgele bir engel tipini örnekleyip (instantiate) sahneye ekle.
-- [ ] Ekran dışına çıkan engelleri bellekten temizle (`queue_free()`).
+- [x] `Obstacle.tscn` sahnesini oluştur: `Area2D` kök node + `CollisionShape2D` + basit görsel.
+- [x] `Obstacle.gd` scriptini yaz: `_process(delta)` içinde sabit hızla sola hareket.
+- [x] En az 3-4 farklı engel varyasyonu tanımla (yükseklik/konum farkıyla): üstten gelen alçak engel, zeminden yükselen engel, çift engel kombinasyonu, farklı hızda engel.
+- [x] `SpawnManager.gd` scriptini yaz: bir `Timer` node'u ile periyodik olarak rastgele bir engel tipini örnekleyip (instantiate) sahneye ekle.
+- [x] Ekran dışına çıkan engelleri bellekten temizle (`queue_free()`).
 
 ## Faz 3 — Zorluk Artışı ve Skor Sistemi
 
