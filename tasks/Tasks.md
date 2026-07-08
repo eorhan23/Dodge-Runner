@@ -4,11 +4,11 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 0 — Proje Kurulumu
 
-- [ ] `src/` klasörü altında yeni bir Godot 4 projesi oluştur (`project.godot` burada oluşacak).
-- [ ] Proje ayarlarında pencere boyutu ve adı (Dodge Runner) tanımla.
-- [ ] `scenes/`, `scripts/`, `assets/sprites/` alt klasörlerini oluştur.
-- [ ] Repo köküne `.gitignore` ekle (`.godot/`, `.import/`, `export.cfg` hariç tutulsun).
-- [ ] Boş bir `Main.tscn` sahnesi oluştur ve ana sahne olarak ayarla.
+- [x] `src/` klasörü altında yeni bir Godot 4 projesi oluştur (`project.godot` burada oluşacak).
+- [x] Proje ayarlarında pencere boyutu ve adı (Dodge Runner) tanımla.
+- [x] `scenes/`, `scripts/`, `assets/sprites/` alt klasörlerini oluştur.
+- [x] Repo köküne `.gitignore` ekle (`.godot/`, `.import/`, `export.cfg` hariç tutulsun).
+- [x] Boş bir `Main.tscn` sahnesi oluştur ve ana sahne olarak ayarla.
 
 ## Faz 1 — Karakter Mekaniği
 
