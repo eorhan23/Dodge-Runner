@@ -22,7 +22,8 @@ func _ready() -> void:
 
 
 func _start_timer() -> void:
-	timer.start(randf_range(MIN_SPAWN_INTERVAL, MAX_SPAWN_INTERVAL))
+	var interval := randf_range(MIN_SPAWN_INTERVAL, MAX_SPAWN_INTERVAL)
+	timer.start(interval * GameManager.spawn_interval_multiplier)
 
 
 func _on_timer_timeout() -> void:
@@ -31,16 +32,18 @@ func _on_timer_timeout() -> void:
 
 
 func _spawn_random_obstacle() -> void:
+	var base_speed := BASE_SPEED * GameManager.speed_multiplier
+	var fast_speed := FAST_SPEED * GameManager.speed_multiplier
 	match randi() % 4:
 		0:
-			_spawn_obstacle(40.0, 60.0, GROUND_Y, BASE_SPEED, SPAWN_X)
+			_spawn_obstacle(40.0, 60.0, GROUND_Y, base_speed, SPAWN_X)
 		1:
-			_spawn_obstacle(40.0, 100.0, TOP_BOTTOM_Y, BASE_SPEED, SPAWN_X)
+			_spawn_obstacle(40.0, 100.0, TOP_BOTTOM_Y, base_speed, SPAWN_X)
 		2:
-			_spawn_obstacle(40.0, 60.0, GROUND_Y, BASE_SPEED, SPAWN_X)
-			_spawn_obstacle(40.0, 100.0, TOP_BOTTOM_Y, BASE_SPEED, SPAWN_X + 220.0)
+			_spawn_obstacle(40.0, 60.0, GROUND_Y, base_speed, SPAWN_X)
+			_spawn_obstacle(40.0, 100.0, TOP_BOTTOM_Y, base_speed, SPAWN_X + 220.0)
 		3:
-			_spawn_obstacle(40.0, 60.0, GROUND_Y, FAST_SPEED, SPAWN_X)
+			_spawn_obstacle(40.0, 60.0, GROUND_Y, fast_speed, SPAWN_X)
 
 
 func _spawn_obstacle(width: float, height: float, bottom_y: float, speed: float, spawn_x: float) -> void:

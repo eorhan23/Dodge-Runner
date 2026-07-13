@@ -28,18 +28,18 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 3 — Zorluk Artışı ve Skor Sistemi
 
-- [ ] `GameManager.gd` scriptini yaz (autoload/singleton olarak proje ayarlarına ekle).
-- [ ] Oyun başladığından beri geçen süreyi takip eden bir sayaç ekle.
-- [ ] Belirli aralıklarla (örn. her 10 saniyede bir) engel hızını ve/veya spawn sıklığını kademeli olarak artır.
-- [ ] Skor hesaplama mantığını belirle ve uygula (hayatta kalınan süre veya geçilen engel sayısı — bkz. Architecture.md §8 açık soru).
-- [ ] Skoru oyun sırasında ekranda göster (basit bir Label node ile).
+- [x] `GameManager.gd` scriptini yaz (autoload/singleton olarak proje ayarlarına ekle).
+- [x] Oyun başladığından beri geçen süreyi takip eden bir sayaç ekle.
+- [x] Belirli aralıklarla (örn. her 10 saniyede bir) engel hızını ve/veya spawn sıklığını kademeli olarak artır.
+- [x] Skor hesaplama mantığını belirle ve uygula (hayatta kalınan süre veya geçilen engel sayısı — bkz. Architecture.md §8 açık soru).
+- [x] Skoru oyun sırasında ekranda göster (basit bir Label node ile).
 
 ## Faz 4 — Çarpışma ve Oyun Sonu
 
-- [ ] `Obstacle` ile `Player` arasındaki `Area2D` çarpışma sinyalini (`body_entered`) bağla.
-- [ ] Çarpışma anında `GameManager.game_over()` fonksiyonunu tetikle: oyunu durdur, tüm hareketi dondur.
-- [ ] `GameOver.tscn` sahnesini oluştur: final skor gösterimi + "Tekrar Oyna" butonu.
-- [ ] "Tekrar Oyna" butonuna basınca oyunun temiz bir başlangıç durumuna sıfırlanmasını sağla (skor, hız, engel listesi sıfırlanır).
+- [x] `Obstacle` ile `Player` arasındaki `Area2D` çarpışma sinyalini (`body_entered`) bağla.
+- [x] Çarpışma anında `GameManager.game_over()` fonksiyonunu tetikle: oyunu durdur, tüm hareketi dondur.
+- [x] `GameOver.tscn` sahnesini oluştur: final skor gösterimi + "Tekrar Oyna" butonu.
+- [x] "Tekrar Oyna" butonuna basınca oyunun temiz bir başlangıç durumuna sıfırlanmasını sağla (skor, hız, engel listesi sıfırlanır).
 
 ## Faz 5 — Cilalama ve Demo Hazırlığı
 

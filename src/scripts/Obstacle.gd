@@ -13,6 +13,7 @@ const DESPAWN_X := -100.0
 
 func _ready() -> void:
 	_apply_shape()
+	body_entered.connect(_on_body_entered)
 
 
 func _process(delta: float) -> void:
@@ -27,3 +28,8 @@ func _apply_shape() -> void:
 	global_position.y = bottom_y - height / 2.0
 	visual.size = Vector2(width, height)
 	visual.position = Vector2(-width / 2.0, -height / 2.0)
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		GameManager.game_over()
