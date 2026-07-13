@@ -4,7 +4,7 @@ Yandan bakışlı (side-scroller), sonsuz koşu tarzında bir 2D arcade oyunu. O
 
 ## Durum
 
-🏗️ Bu proje aktif olarak geliştiriliyor. Godot 4 projesi kuruldu ve temel oyuncu mekanikleri (zıplama, eğilme) çalışıyor durumda.
+🏗️ Bu proje aktif olarak geliştiriliyor. Temel oynanış döngüsü uçtan uca çalışıyor: zıplama/eğilme, engeller, zamanla artan zorluk, skor, çarpışma ve "Tekrar Oyna" ekranı. Cilalama ve son rötuşlar sürüyor.
 
 ## Proje Amacı
 
@@ -24,10 +24,14 @@ Kısa sürede öğrenilebilen ama ustalaşması zor, klavye kontrollü bir refle
 | `docs/Problem.md` | Çözülmeye çalışılan problem ve motivasyon |
 | `docs/PRD.md` | Ürün sürümleri, kapsam, MVP sınırları |
 | `docs/UserStories.md` | Kullanıcı hikayeleri ve kabul kriterleri |
+| `docs/Architecture.md` | Teknik mimari, klasör/sahne yapısı, oyun döngüsü |
+| `tasks/Tasks.md` | Faz bazlı görev listesi ve ilerleme takibi |
 
 ## Kurulum
 
-*(Kod geliştirme başladığında bu bölüm güncellenecektir.)*
+1. [Godot 4.7](https://godotengine.org/download) (veya üzeri bir 4.x sürümü) indirip kurun.
+2. Godot Proje Yöneticisi'nde "Import" ile `src/project.godot` dosyasını seçin ve projeyi açın.
+3. Editörde F5 (veya F6) ile `Main.tscn` sahnesini çalıştırın.
 
 ## Lisans
 

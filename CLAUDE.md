@@ -45,8 +45,14 @@ dodge-runner/
 │   │   ├── Player.gd
 │   │   ├── Obstacle.gd
 │   │   ├── GameManager.gd      # autoload/singleton
-│   │   └── SpawnManager.gd
+│   │   ├── SpawnManager.gd     # autoload/singleton
+│   │   ├── GameOver.gd
+│   │   ├── ScoreLabel.gd
+│   │   └── ControlsHint.gd
 │   └── assets/sprites/
+│       ├── player.png
+│       ├── obstacle.png
+│       └── background.png
 └── demo/
 ```
 
@@ -71,4 +77,4 @@ Bir sonraki fazın kodu, önceki faz tamamlanmadan yazılmamalıdır — `tasks/
 - **Kapsam dışına çıkma.** MVP dışı özellikler (`tasks/Tasks.md` sonundaki "Backlog — MVP Dışı" bölümü: mobil kontrol, çoklu seviye, ses/müzik, online skor tablosu, karakter özelleştirme, power-up'lar) açıkça istenmedikçe uygulanmaz.
 - **Açık sorular** (`Architecture.md` §8) kod ile örtük olarak cevaplanmaz; belirsizlik varsa kullanıcıya sor.
 - Bir görev tamamlandığında `tasks/Tasks.md` içindeki ilgili `- [ ]` kutusunu `- [x]` olarak işaretle.
-- Placeholder görseller (basit geometrik şekiller) MVP için yeterlidir; gerçek sprite/asset üretimi bilinçli olarak Faz 5'e ertelenmiştir.
+- Placeholder görseller yerine artık `src/assets/sprites/` altındaki gerçek pixel-art sprite'lar (`player.png`, `obstacle.png`, `background.png`) kullanılıyor (Faz 5). Yeni görsel ihtiyaçlarında önce bu klasördeki mevcut assetlerin uygun olup olmadığına bakılmalı.

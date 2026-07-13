@@ -31,9 +31,15 @@ dodge-runner/
 │   │   ├── Player.gd          # Zıplama/eğilme mantığı, girdi işleme
 │   │   ├── Obstacle.gd        # Engel hareketi ve çarpışma sinyali
 │   │   ├── GameManager.gd     # Skor, zorluk artışı, oyun durumu (autoload/singleton)
-│   │   └── SpawnManager.gd    # Engel üretim zamanlaması (Timer tabanlı)
+│   │   ├── SpawnManager.gd    # Engel üretim zamanlaması (Timer tabanlı, autoload/singleton)
+│   │   ├── GameOver.gd        # Final skor gösterimi, "Tekrar Oyna"
+│   │   ├── ScoreLabel.gd      # Skor Label'ını GameManager'dan günceller
+│   │   └── ControlsHint.gd    # Başlangıç kontrol talimatını birkaç saniye sonra gizler
 │   └── assets/
-│       └── sprites/           # MVP'de placeholder geometrik şekiller kullanılabilir
+│       └── sprites/           # pixel-art placeholder sprite'lar
+│           ├── player.png
+│           ├── obstacle.png
+│           └── background.png
 └── demo/                      # Sunum/demo materyalleri
 ```
 
@@ -42,8 +48,9 @@ Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burad
 ## 4. Sahne (Node) Mimarisi
 
 - **Main.tscn**: Kök sahne. `GameManager` ve `SpawnManager` autoload/singleton olarak proje ayarlarında tanımlanır, sahneye bağımlı değildir.
-- **Player.tscn**: `CharacterBody2D` kök node, altında `CollisionShape2D` (durum değişince — koşma/eğilme — boyutu değişir) ve görsel temsil (basit `ColorRect` veya `Sprite2D`). Projede fiziksel bir zemin/`Ground` çarpışma gövdesi yoktur; dikey konum script içindeki mantıksal bir zemin sabitiyle yönetilir — bu, §7'deki Area2D-sinyal-tabanlı çarpışma felsefesiyle tutarlıdır.
-- **Obstacle.tscn**: `Area2D` kök node (fiziksel çarpma yerine sinyal tabanlı tespit tercih edilir — daha basit ve MVP'ye uygun), `body_entered` sinyali `GameManager`'a bağlanır.
+- **Player.tscn**: `CharacterBody2D` kök node, altında `CollisionShape2D` (durum değişince — koşma/eğilme — boyutu değişir) ve görsel temsil (`Sprite2D`, `player.png`). Projede fiziksel bir zemin/`Ground` çarpışma gövdesi yoktur; dikey konum script içindeki mantıksal bir zemin sabitiyle yönetilir — bu, §7'deki Area2D-sinyal-tabanlı çarpışma felsefesiyle tutarlıdır.
+- **Obstacle.tscn**: `Area2D` kök node (fiziksel çarpma yerine sinyal tabanlı tespit tercih edilir — daha basit ve MVP'ye uygun), görsel temsil `Sprite2D` (`obstacle.png`; tavandan sarkan varyantta dikey çevrilip tavana kadar uzatılır), `body_entered` sinyali `Player`'ın `"player"` grubunda olup olmadığını kontrol edip `GameManager.game_over()`'ı tetikler.
+- **Main.tscn**: yukarıdakilere ek olarak statik bir arka plan (`Sprite2D`, `background.png`), skor `Label`'ı (`ScoreLabel.gd`) ve başlangıç kontrol talimatı `Label`'ı (`ControlsHint.gd`) barındırır.
 
 ## 5. Oyun Döngüsü Mantığı
 
@@ -53,11 +60,11 @@ Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burad
 4. `Player`, girdiye (Yukarı Ok / Aşağı Ok) göre durum değiştirir: `Running`, `Jumping`, `Ducking`. Her durumun kendi çarpışma şekli (hitbox) vardır.
 5. Çarpışma (`Obstacle` ile `Player` arasında `Area2D` sinyali) tetiklendiğinde `GameManager.game_over()` çağrılır, oyun durur, `GameOver.tscn` gösterilir.
 
-## 6. Zorluk Artışı Kuralı (Taslak — geliştirme sırasında ayarlanabilir)
+## 6. Zorluk Artışı Kuralı
 
 - Başlangıç hızı ve spawn aralığı sabit bir değerle başlar.
-- Her N saniyede bir (örn. 10 saniye), hız belirli bir yüzde artırılır (örn. %5-10) ve spawn aralığı kısaltılır.
-- Üst sınır konularak (hız/spawn sıklığı belirli bir noktadan sonra sabitlenir) oyunun "oynanamaz" hale gelmesi engellenir.
+- Her 10 saniyede bir, hız %8 artırılır (üst sınır 2.2×) ve spawn aralığı %8 kısaltılır (alt sınır orijinalin 0.5×'i) — bkz. `GameManager.gd`.
+- Üst/alt sınırlar sayesinde oyunun "oynanamaz" hale gelmesi engellenir. Bu değerler bir ilk ayar; gerçek oynanabilirlik hissi playtest ile doğrulanıp gerekirse ince ayar yapılacak (bkz. `Tasks.md` Faz 5).
 
 ## 7. Kapsam Dışı Bırakılan Teknik Kararlar
 
@@ -68,4 +75,4 @@ Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burad
 ## 8. Açık Sorular
 
 - ~~Zıplama fiziksel mi (yerçekimi + zıplama kuvveti) yoksa animasyon tabanlı (tween/sabit eğri) mi olacak?~~ **Karar verildi:** Fiziksel yaklaşım (yerçekimi + zıplama hızı) uygulandı, bkz. `Player.gd`.
-- Skor tam olarak neye göre hesaplanacak (geçen süre mi, geçilen engel sayısı mı, ikisinin kombinasyonu mu)? — Geliştirme sırasında netleştirilecek, `Tasks.md` Faz 3'te ele alınacak.
+- ~~Skor tam olarak neye göre hesaplanacak (geçen süre mi, geçilen engel sayısı mı, ikisinin kombinasyonu mu)?~~ **Karar verildi:** Skor, hayatta kalınan süreye dayanıyor (saniyede 10 puan), bkz. `GameManager.gd`.
