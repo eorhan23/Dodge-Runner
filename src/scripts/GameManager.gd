@@ -5,8 +5,8 @@ const GAME_OVER_SCENE := preload("res://scenes/GameOver.tscn")
 const DIFFICULTY_INTERVAL := 10.0
 const SPEED_INCREASE := 0.08
 const SPAWN_INTERVAL_DECREASE := 0.08
-const MAX_SPEED_MULTIPLIER := 2.5
-const MIN_SPAWN_INTERVAL_MULTIPLIER := 0.4
+const MAX_SPEED_MULTIPLIER := 2.2
+const MIN_SPAWN_INTERVAL_MULTIPLIER := 0.5
 const SCORE_PER_SECOND := 10.0
 
 var elapsed_time: float = 0.0

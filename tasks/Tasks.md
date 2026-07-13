@@ -43,9 +43,9 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 5 — Cilalama ve Demo Hazırlığı
 
-- [ ] Placeholder görselleri (varsa) daha uygun sprite'larla değiştir.
+- [x] Placeholder görselleri (varsa) daha uygun sprite'larla değiştir.
 - [ ] Zorluk eğrisini oynanabilirlik açısından test edip ince ayar yap.
-- [ ] Kontrollerin ekranda kısa bir talimat olarak gösterilmesini sağla (oyun başında).
+- [x] Kontrollerin ekranda kısa bir talimat olarak gösterilmesini sağla (oyun başında).
 - [ ] Demo için kısa bir oynanış kaydı/ekran görüntüsü al, `demo/` klasörüne ekle.
 
 ## Backlog — MVP Dışı (Şimdilik Uygulanmayacak)

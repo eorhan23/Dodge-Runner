@@ -1,13 +1,20 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://375tr57nneag"]
 
 [ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1"]
-[ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="2"]
+[ext_resource type="Script" uid="uid://bxsly4jgxu0gi" path="res://scripts/ScoreLabel.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://k7be3eypc3n0" path="res://assets/sprites/background.png" id="3"]
+[ext_resource type="Script" uid="uid://be3w8msl02ark" path="res://scripts/ControlsHint.gd" id="4"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=1483584541]
 
-[node name="Player" parent="." instance=ExtResource("1")]
+[node name="Background" type="Sprite2D" parent="." unique_id=1553426895]
+position = Vector2(640, -93)
+scale = Vector2(2.05, 2.05)
+texture = ExtResource("3")
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="Player" parent="." unique_id=1019803478 instance=ExtResource("1")]
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=831411351]
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 220.0
@@ -15,3 +22,13 @@ offset_bottom = 52.0
 theme_override_font_sizes/font_size = 24
 text = "Skor: 0"
 script = ExtResource("2")
+
+[node name="ControlsHintLabel" type="Label" parent="." unique_id=1610312940]
+offset_left = 340.0
+offset_top = 20.0
+offset_right = 940.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 20
+text = "Yukarı Ok: Zıpla   |   Aşağı Ok: Eğil"
+horizontal_alignment = 1
+script = ExtResource("4")

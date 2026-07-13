@@ -5,7 +5,7 @@ enum State { RUNNING, JUMPING, DUCKING }
 const GRAVITY := 2000.0
 const JUMP_VELOCITY := -800.0
 const FIXED_X := 200.0
-const GROUND_Y := 550.0
+const GROUND_Y := 585.0
 const RUN_HEIGHT := 80.0
 const DUCK_HEIGHT := 40.0
 const WIDTH := 40.0
@@ -13,7 +13,7 @@ const WIDTH := 40.0
 var state: State = State.RUNNING
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var visual: ColorRect = $ColorRect
+@onready var visual: Sprite2D = $Sprite2D
 
 
 func _ready() -> void:
@@ -53,5 +53,5 @@ func _update_shape(height: float) -> void:
 	var shape := collision_shape.shape as RectangleShape2D
 	shape.size = Vector2(WIDTH, height)
 	global_position.y = GROUND_Y - height / 2.0
-	visual.size = Vector2(WIDTH, height)
-	visual.position = Vector2(-WIDTH / 2.0, -height / 2.0)
+	var texture_height := visual.texture.get_height()
+	visual.scale = Vector2(RUN_HEIGHT / texture_height, height / texture_height)
