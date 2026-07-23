@@ -13,8 +13,8 @@ const MAX_SPAWN_INTERVAL := 2.2
 
 var timer: Timer
 
-var _last_ground_obstacle: Node = null
-var _last_top_obstacle: Node = null
+var _last_ground_obstacle = null
+var _last_top_obstacle = null
 
 
 func _ready() -> void:
@@ -60,7 +60,7 @@ func _spawn_top(speed: float, spawn_x: float) -> void:
 	_last_top_obstacle = _spawn_obstacle(40.0, 100.0, TOP_BOTTOM_Y, safe_speed, spawn_x, true)
 
 
-func _clamp_against(speed: float, other: Node) -> float:
+func _clamp_against(speed: float, other) -> float:
 	# Karşıt tipteki bir önceki engel henüz oyuncuya ulaşmadıysa, yeni engel
 	# onu yakalayıp geçemesin (aksi halde ikisi oyuncunun konumunda çakışıp
 	# aynı anda hem zıplama hem eğilme gerektiren kaçınılmaz bir durum oluşur).
