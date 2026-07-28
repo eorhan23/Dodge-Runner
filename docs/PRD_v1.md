@@ -2,7 +2,6 @@ V1 Özellikleri
 
 Görsel ve Ses Katmanı
 
-* Gerçek sprite/karakter animasyonu (koşma, zıplama, eğilme)
 * Arka plan paralaks kayma efekti
 * Zıplama ve çarpışma ses efektleri
 * Arka plan müziği
