@@ -8,8 +8,6 @@ Görsel ve Ses Katmanı
 
 Zorluk Çeşitliliği
 
-* Farklı engel desenleri (önceden tasarlanmış engel dizilimleri)
-* Rastgele desen havuzundan seçim
 * Zorluk eğrisinin ayarlanabilir hale gelmesi (kolay / normal / zor)
 
 İstatistikler
