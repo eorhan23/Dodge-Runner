@@ -44,17 +44,44 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 ## Faz 5 — Cilalama ve Demo Hazırlığı
 
 - [x] Placeholder görselleri (varsa) daha uygun sprite'larla değiştir.
-- [ ] Zorluk eğrisini oynanabilirlik açısından test edip ince ayar yap.
+- [x] Zorluk eğrisini oynanabilirlik açısından test edip ince ayar yap.
 - [x] Kontrollerin ekranda kısa bir talimat olarak gösterilmesini sağla (oyun başında).
 - [ ] Demo için kısa bir oynanış kaydı/ekran görüntüsü al, `demo/` klasörüne ekle.
 
-## Backlog — MVP Dışı (Şimdilik Uygulanmayacak)
+## Faz 6 — Ana Menü ve Zorluk Seçimi
 
-Bu maddeler `PRD.md` §7'de MVP kapsamı dışında bırakılmıştır. Kullanıcı açıkça istemedikçe uygulanmaz:
+- [ ] `MainMenu.tscn` sahnesini oluştur: Kolay / Normal / Zor zorluk seçenekleri + "Başla" butonu.
+- [ ] `run/main_scene`'i `MainMenu.tscn` olarak ayarla; "Başla" ile `Main.tscn`'e geçiş yap.
+- [ ] Seçilen zorluğun `GameManager`'ın başlangıç hız/zorluk çarpanlarını ve üst sınırlarını nasıl etkileyeceğini tanımla ve uygula.
 
-- Mobil / dokunmatik kontrol desteği
-- Çoklu seviye (level) tasarımı
-- Ses ve müzik sistemi
-- Çevrimiçi skor tablosu (online leaderboard)
+## Faz 7 — Ses ve Müzik
+
+- [ ] `src/assets/audio/sfx/` ve `src/assets/audio/music/` altına ses dosyaları eklendiğinde kullanılacak `AudioStreamPlayer` node'larını Player/GameManager'a ekle.
+- [ ] Zıplama anında ses efekti çal.
+- [ ] Çarpışma/oyun sonu anında ses efekti çal.
+- [ ] Döngülü bir arka plan müziği ekle (menü ve/veya oyun sahnesinde).
+
+## Faz 8 — Paralaks Arka Plan
+
+- [ ] Statik `Background` (`Sprite2D`) yerine `ParallaxBackground`/`ParallaxLayer` yapısı kur.
+- [ ] En az 2 katman (örn. uzak orman + yakın çalılık/zemin) farklı hızlarda kayarak derinlik hissi versin.
+
+## Faz 9 — Yerel İstatistikler
+
+- [ ] `StatsManager.gd` scriptini yaz (autoload olarak ekle), `ConfigFile` ile `user://stats.cfg`'ye okuma/yazma yap.
+- [ ] Takip edilecek veriler: en yüksek skor, toplam oynanan oyun sayısı, ortalama hayatta kalma süresi, son 5 oyunun skor geçmişi.
+- [ ] `GameManager.game_over()` tetiklendiğinde bu turun verisini `StatsManager`'a bildir ve kaydet.
+- [ ] İstatistikleri `MainMenu.tscn`'de (veya ayrı bir İstatistikler ekranında) göster.
+
+## Faz 10 — Kontrol Çeşitliliği
+
+- [ ] `Player.gd`'ye Boşluk tuşuyla da zıplama girdisi ekle.
+- [ ] Tuş atamalarının değiştirilebilmesi için bir Ayarlar ekranı oluştur (InputMap çalışma zamanında güncellenir).
+- [ ] Özelleştirilmiş tuş atamalarını `ConfigFile` ile kalıcı hale getir.
+
+## Backlog — V2 (Şimdilik Uygulanmayacak)
+
+Bu maddeler `PRD_v2.md`'de yer alır, kullanıcı açıkça istemedikçe uygulanmaz:
+
 - Karakter özelleştirme
 - Güç-yükseltmeler (power-up'lar)

@@ -37,6 +37,7 @@ dodge-runner/
 ├── src/                      # Godot projesi kökü (project.godot burada)
 │   ├── project.godot
 │   ├── scenes/
+│   │   ├── MainMenu.tscn       # v1
 │   │   ├── Main.tscn
 │   │   ├── Player.tscn
 │   │   ├── Obstacle.tscn
@@ -46,13 +47,18 @@ dodge-runner/
 │   │   ├── Obstacle.gd
 │   │   ├── GameManager.gd      # autoload/singleton
 │   │   ├── SpawnManager.gd     # autoload/singleton
+│   │   ├── StatsManager.gd     # autoload/singleton, v1
 │   │   ├── GameOver.gd
 │   │   ├── ScoreLabel.gd
 │   │   └── ControlsHint.gd
-│   └── assets/sprites/
-│       ├── player.png
-│       ├── obstacle.png
-│       └── background.png
+│   └── assets/
+│       ├── sprites/
+│       │   ├── player.png
+│       │   ├── obstacle.png
+│       │   └── background.png
+│       └── audio/              # v1
+│           ├── sfx/
+│           └── music/
 └── demo/
 ```
 

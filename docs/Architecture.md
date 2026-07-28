@@ -12,7 +12,7 @@ Dodge Runner, Godot 4 motoru ve GDScript ile geliştirilen, tek dosyalık bir ma
 | Dil | GDScript |
 | Platform | Masaüstü (Windows/Linux/macOS) |
 | Kontrol | Klavye (Yukarı Ok: zıpla, Aşağı Ok: eğil) |
-| Veri Kalıcılığı | Yok (MVP kapsamında skor kaydı diske yazılmaz) |
+| Veri Kalıcılığı | MVP'de yok; v1'de `ConfigFile` ile yerel istatistik/ayar kaydı (`user://`) |
 
 ## 3. Klasör Yapısı
 
@@ -23,6 +23,7 @@ dodge-runner/
 ├── src/                      # Godot projesi kökü (project.godot burada)
 │   ├── project.godot
 │   ├── scenes/
+│   │   ├── MainMenu.tscn      # Zorluk seçimi + istatistikler (v1)
 │   │   ├── Main.tscn          # Ana oyun sahnesi, oyun döngüsünü yönetir
 │   │   ├── Player.tscn        # Karakter sahnesi (CharacterBody2D)
 │   │   ├── Obstacle.tscn      # Tekil engel sahnesi (Area2D)
@@ -32,14 +33,18 @@ dodge-runner/
 │   │   ├── Obstacle.gd        # Engel hareketi ve çarpışma sinyali
 │   │   ├── GameManager.gd     # Skor, zorluk artışı, oyun durumu (autoload/singleton)
 │   │   ├── SpawnManager.gd    # Engel üretim zamanlaması (Timer tabanlı, autoload/singleton)
+│   │   ├── StatsManager.gd    # Yerel istatistik kaydı, ConfigFile (autoload/singleton, v1)
 │   │   ├── GameOver.gd        # Final skor gösterimi, "Tekrar Oyna"
 │   │   ├── ScoreLabel.gd      # Skor Label'ını GameManager'dan günceller
 │   │   └── ControlsHint.gd    # Başlangıç kontrol talimatını birkaç saniye sonra gizler
 │   └── assets/
-│       └── sprites/           # pixel-art placeholder sprite'lar
-│           ├── player.png
-│           ├── obstacle.png
-│           └── background.png
+│       ├── sprites/           # pixel-art placeholder sprite'lar
+│       │   ├── player.png
+│       │   ├── obstacle.png
+│       │   └── background.png
+│       └── audio/             # ses varlıkları (v1)
+│           ├── sfx/           # zıplama, çarpışma ses efektleri
+│           └── music/         # arka plan müziği
 └── demo/                      # Sunum/demo materyalleri
 ```
 
