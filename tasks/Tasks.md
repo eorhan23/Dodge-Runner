@@ -71,10 +71,12 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 9 — Yerel İstatistikler
 
-- [ ] `StatsManager.gd` scriptini yaz (autoload olarak ekle), `ConfigFile` ile `user://stats.cfg`'ye okuma/yazma yap.
-- [ ] Takip edilecek veriler: en yüksek skor, toplam oynanan oyun sayısı, ortalama hayatta kalma süresi, son 5 oyunun skor geçmişi.
-- [ ] `GameManager.game_over()` tetiklendiğinde bu turun verisini `StatsManager`'a bildir ve kaydet.
-- [ ] İstatistikleri `MainMenu.tscn`'de (veya ayrı bir İstatistikler ekranında) göster.
+- [x] `StatsManager.gd` scriptini yaz (autoload olarak ekle), `ConfigFile` ile `user://stats.cfg`'ye okuma/yazma yap.
+- [x] Takip edilecek veriler: en yüksek skor, toplam oynanan oyun sayısı, ortalama hayatta kalma süresi, son 5 oyunun skor geçmişi.
+- [x] `GameManager.game_over()` tetiklendiğinde bu turun verisini `StatsManager`'a bildir ve kaydet.
+- [x] İstatistikleri `MainMenu.tscn`'de göster (sağ panelde, seçili zorluğa göre).
+
+> Not: İstatistikler her zorluk seviyesi için ayrı tutulur; menüde seçili zorluğun verileri gösterilir.
 
 ## Faz 10 — Kontrol Çeşitliliği
 

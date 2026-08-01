@@ -73,6 +73,7 @@ func game_over() -> void:
 		return
 	is_game_over = true
 	is_running = false
+	StatsManager.record_game(difficulty, score, elapsed_time)
 	AudioManager.stop_music()
 	AudioManager.play_death()
 	get_tree().paused = true

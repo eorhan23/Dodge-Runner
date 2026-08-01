@@ -30,18 +30,18 @@ horizontal_alignment = 1
 text = "Dodge Runner"
 
 [node name="DifficultyLabel" type="Label" parent="."]
-offset_left = 340.0
+offset_left = 150.0
 offset_top = 260.0
-offset_right = 940.0
+offset_right = 710.0
 offset_bottom = 292.0
 theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 text = "Zorluk Seviyesi"
 
 [node name="DifficultyButtons" type="HBoxContainer" parent="."]
-offset_left = 440.0
+offset_left = 230.0
 offset_top = 310.0
-offset_right = 840.0
+offset_right = 630.0
 offset_bottom = 360.0
 theme_override_constants/separation = 20
 alignment = 1
@@ -66,12 +66,41 @@ button_group = SubResource("ButtonGroup_1")
 text = "Zor"
 
 [node name="StartButton" type="Button" parent="."]
-offset_left = 540.0
+offset_left = 330.0
 offset_top = 420.0
-offset_right = 740.0
+offset_right = 530.0
 offset_bottom = 475.0
 theme_override_font_sizes/font_size = 28
 text = "Başla"
+
+[node name="StatsPanel" type="VBoxContainer" parent="."]
+offset_left = 760.0
+offset_top = 260.0
+offset_right = 1130.0
+offset_bottom = 475.0
+theme_override_constants/separation = 10
+
+[node name="StatsTitle" type="Label" parent="StatsPanel"]
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+text = "İstatistikler"
+
+[node name="HighScoreLabel" type="Label" parent="StatsPanel"]
+theme_override_font_sizes/font_size = 18
+text = "En Yüksek Skor: —"
+
+[node name="GamesPlayedLabel" type="Label" parent="StatsPanel"]
+theme_override_font_sizes/font_size = 18
+text = "Oynanan Oyun: —"
+
+[node name="AverageTimeLabel" type="Label" parent="StatsPanel"]
+theme_override_font_sizes/font_size = 18
+text = "Ortalama Süre: —"
+
+[node name="RecentScoresLabel" type="Label" parent="StatsPanel"]
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 2
+text = "Son 5 Skor: —"
 
 [node name="ControlsLabel" type="Label" parent="."]
 offset_left = 340.0

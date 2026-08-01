@@ -80,7 +80,7 @@ Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burad
 ## 7. Kapsam Dışı Bırakılan Teknik Kararlar
 
 - **Fizik motoru tabanlı çarpışma (RigidBody2D) kullanılmayacak** — Area2D sinyal tabanlı yaklaşım, MVP için yeterli ve daha öngörülebilir.
-- **Veritabanı / online skor tablosu yok** — bu proje tamamen yerel/çevrimdışı çalışır, bu yüzden `Database.md` ve `API.md` dosyaları bu proje kapsamında oluşturulmamıştır.
+- **Veritabanı / online skor tablosu yok** — bu proje tamamen yerel/çevrimdışı çalışır, bu yüzden `Database.md` ve `API.md` dosyaları bu proje kapsamında oluşturulmamıştır. (v1'de istatistikler `ConfigFile` ile `user://stats.cfg`'ye yazılır; bu yerel bir dosyadır, çevrimdışı çalışma değişmez.)
 - **Ses/müzik sistemi MVP'de yok** — ilerleyen fazlarda opsiyonel olarak eklenebilir.
 
 ## 8. Açık Sorular
