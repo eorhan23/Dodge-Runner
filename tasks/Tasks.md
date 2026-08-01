@@ -50,9 +50,9 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 6 — Ana Menü ve Zorluk Seçimi
 
-- [ ] `MainMenu.tscn` sahnesini oluştur: Kolay / Normal / Zor zorluk seçenekleri + "Başla" butonu.
-- [ ] `run/main_scene`'i `MainMenu.tscn` olarak ayarla; "Başla" ile `Main.tscn`'e geçiş yap.
-- [ ] Seçilen zorluğun `GameManager`'ın başlangıç hız/zorluk çarpanlarını ve üst sınırlarını nasıl etkileyeceğini tanımla ve uygula.
+- [x] `MainMenu.tscn` sahnesini oluştur: Kolay / Normal / Zor zorluk seçenekleri + "Başla" butonu.
+- [x] `run/main_scene`'i `MainMenu.tscn` olarak ayarla; "Başla" ile `Main.tscn`'e geçiş yap.
+- [x] Seçilen zorluğun `GameManager`'ın başlangıç hız/zorluk çarpanlarını ve üst sınırlarını nasıl etkileyeceğini tanımla ve uygula.
 
 ## Faz 7 — Ses ve Müzik
 
