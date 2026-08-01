@@ -38,6 +38,7 @@ dodge-runner/
 │   │   ├── MainMenu.gd        # Zorluk seçimi, oyunu başlatma (v1)
 │   │   ├── Main.gd            # Oyun sahnesi açılınca turu başlatır
 │   │   ├── GameOver.gd        # Final skor gösterimi, "Tekrar Oyna"
+│   │   ├── ScrollingBackground.gd # Arka planı sonsuz yatay kaydırır (v1)
 │   │   ├── ScoreLabel.gd      # Skor Label'ını GameManager'dan günceller
 │   │   └── ControlsHint.gd    # Başlangıç kontrol talimatını birkaç saniye sonra gizler
 │   └── assets/

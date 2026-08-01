@@ -62,10 +62,12 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 - [x] Döngülü bir arka plan müziği ekle (oyun sahnesinde; menüde sessiz, ölünce durur).
 - [x] Arayüz sesleri: zorluk seçiminde tık sesi, oyunu başlatan butonlarda (Başla / Tekrar Oyna) başlangıç sesi.
 
-## Faz 8 — Paralaks Arka Plan
+## Faz 8 — Kayan Arka Plan
 
-- [ ] Statik `Background` (`Sprite2D`) yerine `ParallaxBackground`/`ParallaxLayer` yapısı kur.
-- [ ] En az 2 katman (örn. uzak orman + yakın çalılık/zemin) farklı hızlarda kayarak derinlik hissi versin.
+- [x] Statik `Background` (`Sprite2D`) sonsuz yatay akış yapacak şekilde güncellendi (`ScrollingBackground.gd`).
+- [x] Mevcut tek arka plan görseli yan yana kesintisiz tekrarlanarak kayar; hız, oyunun zorluk çarpanıyla ölçeklenir.
+
+> Not: Çok katmanlı paralaks yerine, kullanıcı isteğiyle mevcut tek görselin sonsuz kaydırılması tercih edildi (daha sade, ek görsel varlık gerektirmiyor).
 
 ## Faz 9 — Yerel İstatistikler
 

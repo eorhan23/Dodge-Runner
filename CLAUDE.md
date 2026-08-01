@@ -52,6 +52,7 @@ dodge-runner/
 │   │   ├── MainMenu.gd         # v1
 │   │   ├── Main.gd
 │   │   ├── GameOver.gd
+│   │   ├── ScrollingBackground.gd  # v1
 │   │   ├── ScoreLabel.gd
 │   │   └── ControlsHint.gd
 │   └── assets/

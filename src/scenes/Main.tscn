@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://k7be3eypc3n0" path="res://assets/sprites/background.png" id="3"]
 [ext_resource type="Script" uid="uid://be3w8msl02ark" path="res://scripts/ControlsHint.gd" id="4"]
 [ext_resource type="Script" path="res://scripts/Main.gd" id="5"]
+[ext_resource type="Script" path="res://scripts/ScrollingBackground.gd" id="6"]
 
 [node name="Main" type="Node2D" unique_id=1483584541]
 script = ExtResource("5")
@@ -13,6 +14,7 @@ script = ExtResource("5")
 position = Vector2(640, -93)
 scale = Vector2(2.05, 2.05)
 texture = ExtResource("3")
+script = ExtResource("6")
 
 [node name="Player" parent="." unique_id=1019803478 instance=ExtResource("1")]
 
