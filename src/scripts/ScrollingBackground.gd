@@ -18,10 +18,11 @@ func _process(delta: float) -> void:
 	if not GameManager.is_running:
 		return
 
-	# Engellerle birebir aynı ekran hızı: Obstacle'lar SpawnManager.BASE_SPEED *
-	# speed_multiplier ile kayar. region_rect doku uzayında olduğu için, sprite'ın
-	# ölçeğine bölerek ekrandaki piksel hızını eşitliyoruz.
-	var screen_speed := SpawnManager.BASE_SPEED * GameManager.speed_multiplier
+	# Normal engellerle birebir aynı ekran hızı: Obstacle.current_speed() ile aynı
+	# formül (BASE_SPEED * BASE_FACTOR * speed_multiplier), her karede yeniden
+	# hesaplandığı için zorluk arttıkça ikisi birlikte hızlanır. region_rect doku
+	# uzayında olduğundan, sprite'ın ölçeğine bölerek ekran hızını eşitliyoruz.
+	var screen_speed := SpawnManager.BASE_SPEED * SpawnManager.BASE_FACTOR * GameManager.speed_multiplier
 	region_rect.position.x += screen_speed / scale.x * delta
 
 	# Tam bir görsel genişliği kaydıkça başa sar; sayı büyümesin ve dikiş görünmesin.

@@ -3,7 +3,10 @@ extends Area2D
 @export var width: float = 40.0
 @export var height: float = 60.0
 @export var bottom_y: float = 525.0
-@export var speed: float = 300.0
+# Taban hıza göre katsayı (1.0 = normal, >1.0 = hızlı varyant). Gerçek hız her
+# karede güncel zorluk çarpanıyla hesaplanır; böylece ekrandaki tüm engeller ve
+# arka plan zorluk arttıkça birlikte hızlanır, aralarında hız farkı oluşmaz.
+@export var speed_factor: float = 1.0
 @export var is_hanging: bool = false
 
 const DESPAWN_X := -100.0
@@ -18,9 +21,13 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	position.x -= speed * delta
+	position.x -= current_speed() * delta
 	if position.x < DESPAWN_X:
 		queue_free()
+
+
+func current_speed() -> float:
+	return SpawnManager.BASE_SPEED * speed_factor * GameManager.speed_multiplier
 
 
 func _apply_shape() -> void:
