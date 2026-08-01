@@ -80,9 +80,11 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 10 — Kontrol Çeşitliliği
 
-- [ ] `Player.gd`'ye Boşluk tuşuyla da zıplama girdisi ekle.
-- [ ] Tuş atamalarının değiştirilebilmesi için bir Ayarlar ekranı oluştur (InputMap çalışma zamanında güncellenir).
-- [ ] Özelleştirilmiş tuş atamalarını `ConfigFile` ile kalıcı hale getir.
+- [x] `Player.gd`'ye Boşluk tuşuyla da zıplama girdisi ekle (`jump` aksiyonunun ikinci varsayılan tuşu).
+- [x] Tuş atamalarının değiştirilebilmesi için bir Ayarlar ekranı oluştur (`Settings.tscn`, InputMap çalışma zamanında güncellenir).
+- [x] Özelleştirilmiş tuş atamalarını `ConfigFile` ile kalıcı hale getir (`user://settings.cfg`).
+
+> Not: `ui_up`/`ui_down` yerine kendi `jump`/`duck` aksiyonları tanımlandı — motorun UI aksiyonlarını değiştirmemek için. "Zıpla" iki atanabilir yuvaya sahiptir (varsayılan: Yukarı Ok, Boşluk); ikisi de değiştirilebilir. Ayarlar ekranında "Varsayılana Sıfırla" seçeneği vardır.
 
 ## Backlog — V2 (Şimdilik Uygulanmayacak)
 

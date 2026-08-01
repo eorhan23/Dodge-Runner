@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://375tr57nneag"]
 
-[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://f00r5md7y6xt" path="res://scenes/Player.tscn" id="1"]
 [ext_resource type="Script" uid="uid://bxsly4jgxu0gi" path="res://scripts/ScoreLabel.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://k7be3eypc3n0" path="res://assets/sprites/background.png" id="3"]
 [ext_resource type="Script" uid="uid://be3w8msl02ark" path="res://scripts/ControlsHint.gd" id="4"]
-[ext_resource type="Script" path="res://scripts/Main.gd" id="5"]
-[ext_resource type="Script" path="res://scripts/ScrollingBackground.gd" id="6"]
+[ext_resource type="Script" uid="uid://masb0ce5iwbv" path="res://scripts/Main.gd" id="5"]
+[ext_resource type="Script" uid="uid://bjdu6gsjmydbp" path="res://scripts/ScrollingBackground.gd" id="6"]
 
 [node name="Main" type="Node2D" unique_id=1483584541]
 script = ExtResource("5")

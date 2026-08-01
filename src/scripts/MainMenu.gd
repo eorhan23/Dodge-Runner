@@ -4,6 +4,8 @@ extends Control
 @onready var normal_button: Button = $DifficultyButtons/NormalButton
 @onready var hard_button: Button = $DifficultyButtons/HardButton
 @onready var start_button: Button = $StartButton
+@onready var settings_button: Button = $SettingsButton
+@onready var controls_label: Label = $ControlsLabel
 @onready var high_score_label: Label = $StatsPanel/HighScoreLabel
 @onready var games_played_label: Label = $StatsPanel/GamesPlayedLabel
 @onready var average_time_label: Label = $StatsPanel/AverageTimeLabel
@@ -15,6 +17,8 @@ func _ready() -> void:
 	normal_button.pressed.connect(_on_difficulty_selected.bind(GameManager.Difficulty.NORMAL))
 	hard_button.pressed.connect(_on_difficulty_selected.bind(GameManager.Difficulty.HARD))
 	start_button.pressed.connect(_on_start_pressed)
+	settings_button.pressed.connect(_on_settings_pressed)
+	controls_label.text = SettingsManager.get_controls_hint()
 	_sync_selection()
 
 
@@ -56,3 +60,8 @@ func _refresh_stats() -> void:
 func _on_start_pressed() -> void:
 	AudioManager.play_ui_start()
 	get_tree().change_scene_to_file("res://scenes/Main.tscn")
+
+
+func _on_settings_pressed() -> void:
+	AudioManager.play_ui_click()
+	get_tree().change_scene_to_file("res://scenes/Settings.tscn")

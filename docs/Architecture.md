@@ -11,7 +11,7 @@ Dodge Runner, Godot 4 motoru ve GDScript ile geliştirilen, tek dosyalık bir ma
 | Motor | Godot 4.x |
 | Dil | GDScript |
 | Platform | Masaüstü (Windows/Linux/macOS) |
-| Kontrol | Klavye (Yukarı Ok: zıpla, Aşağı Ok: eğil) |
+| Kontrol | Klavye (varsayılan: Yukarı Ok / Boşluk: zıpla, Aşağı Ok: eğil — v1'de değiştirilebilir) |
 | Veri Kalıcılığı | MVP'de yok; v1'de `ConfigFile` ile yerel istatistik/ayar kaydı (`user://`) |
 
 ## 3. Klasör Yapısı
@@ -24,6 +24,7 @@ dodge-runner/
 │   ├── project.godot
 │   ├── scenes/
 │   │   ├── MainMenu.tscn      # Zorluk seçimi + istatistikler (v1)
+│   │   ├── Settings.tscn      # Tuş ataması ekranı (v1)
 │   │   ├── Main.tscn          # Ana oyun sahnesi, oyun döngüsünü yönetir
 │   │   ├── Player.tscn        # Karakter sahnesi (CharacterBody2D)
 │   │   ├── Obstacle.tscn      # Tekil engel sahnesi (Area2D)
@@ -35,6 +36,8 @@ dodge-runner/
 │   │   ├── SpawnManager.gd    # Engel üretim zamanlaması (Timer tabanlı, autoload/singleton)
 │   │   ├── StatsManager.gd    # Yerel istatistik kaydı, ConfigFile (autoload/singleton, v1)
 │   │   ├── AudioManager.gd    # Ses efektleri ve müzik (autoload/singleton, v1)
+│   │   ├── SettingsManager.gd # Tuş atamaları, ConfigFile (autoload/singleton, v1)
+│   │   ├── Settings.gd        # Tuş atama ekranı mantığı (v1)
 │   │   ├── MainMenu.gd        # Zorluk seçimi, oyunu başlatma (v1)
 │   │   ├── Main.gd            # Oyun sahnesi açılınca turu başlatır
 │   │   ├── GameOver.gd        # Final skor gösterimi, "Tekrar Oyna"

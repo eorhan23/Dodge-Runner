@@ -25,7 +25,7 @@ Kod yazmadan önce şu dosyaları oku — bu CLAUDE.md onların özetidir, tam g
 | Motor | Godot 4.x |
 | Dil | GDScript |
 | Platform | Masaüstü (Windows/Linux/macOS) |
-| Kontrol | Klavye (Yukarı Ok: zıpla, Aşağı Ok: eğil) |
+| Kontrol | Klavye (varsayılan: Yukarı Ok / Boşluk: zıpla, Aşağı Ok: eğil — v1'de değiştirilebilir) |
 | Veri Kalıcılığı | Yok (MVP kapsamında) |
 
 ## Klasör Yapısı (bkz. `Architecture.md` §3)
@@ -38,6 +38,7 @@ dodge-runner/
 │   ├── project.godot
 │   ├── scenes/
 │   │   ├── MainMenu.tscn       # v1
+│   │   ├── Settings.tscn       # v1
 │   │   ├── Main.tscn
 │   │   ├── Player.tscn
 │   │   ├── Obstacle.tscn
@@ -49,7 +50,9 @@ dodge-runner/
 │   │   ├── SpawnManager.gd     # autoload/singleton
 │   │   ├── StatsManager.gd     # autoload/singleton, v1
 │   │   ├── AudioManager.gd     # autoload/singleton, v1
+│   │   ├── SettingsManager.gd  # autoload/singleton, v1
 │   │   ├── MainMenu.gd         # v1
+│   │   ├── Settings.gd         # v1
 │   │   ├── Main.gd
 │   │   ├── GameOver.gd
 │   │   ├── ScrollingBackground.gd  # v1
