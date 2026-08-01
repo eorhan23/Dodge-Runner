@@ -34,6 +34,9 @@ dodge-runner/
 │   │   ├── GameManager.gd     # Skor, zorluk artışı, oyun durumu (autoload/singleton)
 │   │   ├── SpawnManager.gd    # Engel üretim zamanlaması (Timer tabanlı, autoload/singleton)
 │   │   ├── StatsManager.gd    # Yerel istatistik kaydı, ConfigFile (autoload/singleton, v1)
+│   │   ├── AudioManager.gd    # Ses efektleri ve müzik (autoload/singleton, v1)
+│   │   ├── MainMenu.gd        # Zorluk seçimi, oyunu başlatma (v1)
+│   │   ├── Main.gd            # Oyun sahnesi açılınca turu başlatır
 │   │   ├── GameOver.gd        # Final skor gösterimi, "Tekrar Oyna"
 │   │   ├── ScoreLabel.gd      # Skor Label'ını GameManager'dan günceller
 │   │   └── ControlsHint.gd    # Başlangıç kontrol talimatını birkaç saniye sonra gizler
@@ -43,8 +46,10 @@ dodge-runner/
 │       │   ├── obstacle.png
 │       │   └── background.png
 │       └── audio/             # ses varlıkları (v1)
-│           ├── sfx/           # zıplama, çarpışma ses efektleri
-│           └── music/         # arka plan müziği
+│           ├── sfx/
+│           │   ├── game/      # jump.mp3, death.mp3
+│           │   └── ui/        # click.mp3, start.mp3
+│           └── music/         # background_loop.mp3
 └── demo/                      # Sunum/demo materyalleri
 ```
 

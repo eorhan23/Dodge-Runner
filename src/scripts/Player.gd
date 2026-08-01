@@ -39,6 +39,7 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("ui_up"):
 			state = State.JUMPING
 			velocity.y = JUMP_VELOCITY
+			AudioManager.play_jump()
 			_update_shape(RUN_HEIGHT)
 		elif Input.is_action_pressed("ui_down"):
 			if state != State.DUCKING:

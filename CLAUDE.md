@@ -48,6 +48,9 @@ dodge-runner/
 │   │   ├── GameManager.gd      # autoload/singleton
 │   │   ├── SpawnManager.gd     # autoload/singleton
 │   │   ├── StatsManager.gd     # autoload/singleton, v1
+│   │   ├── AudioManager.gd     # autoload/singleton, v1
+│   │   ├── MainMenu.gd         # v1
+│   │   ├── Main.gd
 │   │   ├── GameOver.gd
 │   │   ├── ScoreLabel.gd
 │   │   └── ControlsHint.gd
@@ -58,7 +61,9 @@ dodge-runner/
 │       │   └── background.png
 │       └── audio/              # v1
 │           ├── sfx/
-│           └── music/
+│           │   ├── game/       # jump.mp3, death.mp3
+│           │   └── ui/         # click.mp3, start.mp3
+│           └── music/          # background_loop.mp3
 └── demo/
 ```
 

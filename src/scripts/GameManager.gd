@@ -64,6 +64,7 @@ func set_difficulty(new_difficulty: Difficulty) -> void:
 func start_game() -> void:
 	reset()
 	SpawnManager.reset()
+	AudioManager.start_music()
 	is_running = true
 
 
@@ -72,6 +73,8 @@ func game_over() -> void:
 		return
 	is_game_over = true
 	is_running = false
+	AudioManager.stop_music()
+	AudioManager.play_death()
 	get_tree().paused = true
 	var game_over_ui := GAME_OVER_SCENE.instantiate()
 	get_tree().current_scene.add_child(game_over_ui)

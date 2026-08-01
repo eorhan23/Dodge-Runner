@@ -56,10 +56,11 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 7 — Ses ve Müzik
 
-- [ ] `src/assets/audio/sfx/` ve `src/assets/audio/music/` altına ses dosyaları eklendiğinde kullanılacak `AudioStreamPlayer` node'larını Player/GameManager'a ekle.
-- [ ] Zıplama anında ses efekti çal.
-- [ ] Çarpışma/oyun sonu anında ses efekti çal.
-- [ ] Döngülü bir arka plan müziği ekle (menü ve/veya oyun sahnesinde).
+- [x] `src/assets/audio/sfx/` ve `src/assets/audio/music/` altındaki ses dosyalarını çalan `AudioManager.gd` autoload'ını oluştur (`AudioStreamPlayer` node'ları koddan üretilir).
+- [x] Zıplama anında ses efekti çal.
+- [x] Çarpışma/oyun sonu anında ses efekti çal.
+- [x] Döngülü bir arka plan müziği ekle (oyun sahnesinde; menüde sessiz, ölünce durur).
+- [x] Arayüz sesleri: zorluk seçiminde tık sesi, oyunu başlatan butonlarda (Başla / Tekrar Oyna) başlangıç sesi.
 
 ## Faz 8 — Paralaks Arka Plan
 

@@ -13,11 +13,14 @@ func _ready() -> void:
 
 func _on_restart_pressed() -> void:
 	# Sahne yeniden yüklenince Main.gd._ready() GameManager.start_game()'i çağırır.
+	AudioManager.play_ui_start()
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 
 func _on_main_menu_pressed() -> void:
+	AudioManager.play_ui_click()
+	AudioManager.stop_music()
 	GameManager.reset()
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")

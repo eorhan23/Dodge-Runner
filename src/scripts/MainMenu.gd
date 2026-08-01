@@ -15,6 +15,7 @@ func _ready() -> void:
 
 
 func _on_difficulty_selected(new_difficulty: GameManager.Difficulty) -> void:
+	AudioManager.play_ui_click()
 	GameManager.set_difficulty(new_difficulty)
 	_sync_selection()
 
@@ -26,4 +27,5 @@ func _sync_selection() -> void:
 
 
 func _on_start_pressed() -> void:
+	AudioManager.play_ui_start()
 	get_tree().change_scene_to_file("res://scenes/Main.tscn")
