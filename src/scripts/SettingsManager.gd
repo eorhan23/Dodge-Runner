@@ -1,7 +1,11 @@
 extends Node
 
 const SAVE_PATH := "user://settings.cfg"
-const SECTION := "input"
+const SECTION_INPUT := "input"
+const SECTION_AUDIO := "audio"
+
+const DEFAULT_MUSIC_VOLUME := 100.0
+const DEFAULT_SFX_VOLUME := 100.0
 
 # Ayarlar ekranında gösterilecek atanabilir yuvalar.
 # "jump" iki yuvalıdır: varsayılan olarak Yukarı Ok ve Boşluk.
@@ -24,6 +28,7 @@ func _ready() -> void:
 	_config.load(SAVE_PATH)
 	_load_saved_bindings()
 	_rebuild_input_map()
+	_apply_volumes()
 
 
 func _capture_defaults() -> void:
@@ -44,10 +49,36 @@ func _capture_defaults() -> void:
 func _load_saved_bindings() -> void:
 	for entry in SLOTS:
 		var key := _key_for(entry["action"], entry["slot"])
-		var saved: int = _config.get_value(SECTION, key, -2)
+		var saved: int = _config.get_value(SECTION_INPUT, key, -2)
 		# -2 = kayıt yok (varsayılan korunur), -1 = bilerek boşaltılmış yuva.
 		if saved != -2:
 			_slots[key] = saved
+
+
+func get_music_volume() -> float:
+	return _config.get_value(SECTION_AUDIO, "music", DEFAULT_MUSIC_VOLUME)
+
+
+func get_sfx_volume() -> float:
+	return _config.get_value(SECTION_AUDIO, "sfx", DEFAULT_SFX_VOLUME)
+
+
+func set_music_volume(percent: float) -> void:
+	_config.set_value(SECTION_AUDIO, "music", percent)
+	_config.save(SAVE_PATH)
+	AudioManager.set_music_volume(percent)
+
+
+func set_sfx_volume(percent: float) -> void:
+	_config.set_value(SECTION_AUDIO, "sfx", percent)
+	_config.save(SAVE_PATH)
+	AudioManager.set_sfx_volume(percent)
+
+
+func _apply_volumes() -> void:
+	# AudioManager autoload sırasında bizden önce geldiği için ses yolları hazır.
+	AudioManager.set_music_volume(get_music_volume())
+	AudioManager.set_sfx_volume(get_sfx_volume())
 
 
 func get_binding_text(action: String, slot: int) -> String:
@@ -82,10 +113,10 @@ func set_binding(action: String, slot: int, keycode: int) -> void:
 			continue
 		if _slots.get(other_key, -1) == keycode:
 			_slots[other_key] = -1
-			_config.set_value(SECTION, other_key, -1)
+			_config.set_value(SECTION_INPUT, other_key, -1)
 
 	_slots[_key_for(action, slot)] = keycode
-	_config.set_value(SECTION, _key_for(action, slot), keycode)
+	_config.set_value(SECTION_INPUT, _key_for(action, slot), keycode)
 	_config.save(SAVE_PATH)
 	_rebuild_input_map()
 
@@ -95,10 +126,13 @@ func reset_to_defaults() -> void:
 		_slots[key] = _defaults[key]
 
 	# Kayıtlı ayarları da temizle ki bir sonraki açılışta geri gelmesinler.
-	if _config.has_section(SECTION):
-		_config.erase_section(SECTION)
+	if _config.has_section(SECTION_INPUT):
+		_config.erase_section(SECTION_INPUT)
+	if _config.has_section(SECTION_AUDIO):
+		_config.erase_section(SECTION_AUDIO)
 	_config.save(SAVE_PATH)
 	_rebuild_input_map()
+	_apply_volumes()
 
 
 func _rebuild_input_map() -> void:

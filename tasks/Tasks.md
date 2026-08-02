@@ -61,6 +61,7 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 - [x] Çarpışma/oyun sonu anında ses efekti çal.
 - [x] Döngülü bir arka plan müziği ekle (oyun sahnesinde; menüde sessiz, ölünce durur).
 - [x] Arayüz sesleri: zorluk seçiminde tık sesi, oyunu başlatan butonlarda (Başla / Tekrar Oyna) başlangıç sesi.
+- [x] Müzik ve efektler için ayrı ses seviyesi ayarı (Ayarlar ekranında kaydıraç, `ConfigFile` ile kalıcı).
 
 ## Faz 8 — Kayan Arka Plan
 

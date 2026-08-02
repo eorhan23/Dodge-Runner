@@ -44,11 +44,70 @@ offset_bottom = 400.0
 theme_override_constants/separation = 15
 alignment = 1
 
+[node name="AudioTitle" type="Label" parent="."]
+offset_left = 340.0
+offset_top = 420.0
+offset_right = 940.0
+offset_bottom = 452.0
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+text = "Ses"
+
+[node name="MusicRow" type="HBoxContainer" parent="."]
+offset_left = 380.0
+offset_top = 470.0
+offset_right = 900.0
+offset_bottom = 505.0
+theme_override_constants/separation = 20
+
+[node name="MusicLabel" type="Label" parent="MusicRow"]
+custom_minimum_size = Vector2(140, 35)
+theme_override_font_sizes/font_size = 20
+vertical_alignment = 1
+text = "Müzik"
+
+[node name="MusicSlider" type="HSlider" parent="MusicRow"]
+custom_minimum_size = Vector2(280, 35)
+max_value = 100.0
+value = 100.0
+
+[node name="MusicValue" type="Label" parent="MusicRow"]
+custom_minimum_size = Vector2(60, 35)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 2
+vertical_alignment = 1
+text = "100%"
+
+[node name="SfxRow" type="HBoxContainer" parent="."]
+offset_left = 380.0
+offset_top = 515.0
+offset_right = 900.0
+offset_bottom = 550.0
+theme_override_constants/separation = 20
+
+[node name="SfxLabel" type="Label" parent="SfxRow"]
+custom_minimum_size = Vector2(140, 35)
+theme_override_font_sizes/font_size = 20
+vertical_alignment = 1
+text = "Efektler"
+
+[node name="SfxSlider" type="HSlider" parent="SfxRow"]
+custom_minimum_size = Vector2(280, 35)
+max_value = 100.0
+value = 100.0
+
+[node name="SfxValue" type="Label" parent="SfxRow"]
+custom_minimum_size = Vector2(60, 35)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 2
+vertical_alignment = 1
+text = "100%"
+
 [node name="BottomButtons" type="HBoxContainer" parent="."]
 offset_left = 430.0
-offset_top = 450.0
+offset_top = 600.0
 offset_right = 850.0
-offset_bottom = 500.0
+offset_bottom = 650.0
 theme_override_constants/separation = 20
 alignment = 1
 

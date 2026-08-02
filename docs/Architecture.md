@@ -12,7 +12,7 @@ Dodge Runner, Godot 4 motoru ve GDScript ile geliştirilen, tek dosyalık bir ma
 | Dil | GDScript |
 | Platform | Masaüstü (Windows/Linux/macOS) |
 | Kontrol | Klavye (varsayılan: Yukarı Ok / Boşluk: zıpla, Aşağı Ok: eğil — v1'de değiştirilebilir) |
-| Veri Kalıcılığı | MVP'de yok; v1'de `ConfigFile` ile yerel istatistik/ayar kaydı (`user://`) |
+| Veri Kalıcılığı | MVP'de yok; v1'de `ConfigFile` ile yerel kayıt (`user://stats.cfg` istatistikler, `user://settings.cfg` tuş atamaları ve ses seviyeleri) |
 
 ## 3. Klasör Yapısı
 
@@ -35,8 +35,8 @@ dodge-runner/
 │   │   ├── GameManager.gd     # Skor, zorluk artışı, oyun durumu (autoload/singleton)
 │   │   ├── SpawnManager.gd    # Engel üretim zamanlaması (Timer tabanlı, autoload/singleton)
 │   │   ├── StatsManager.gd    # Yerel istatistik kaydı, ConfigFile (autoload/singleton, v1)
-│   │   ├── AudioManager.gd    # Ses efektleri ve müzik (autoload/singleton, v1)
-│   │   ├── SettingsManager.gd # Tuş atamaları, ConfigFile (autoload/singleton, v1)
+│   │   ├── AudioManager.gd    # Ses efektleri, müzik, ses yolları (autoload/singleton, v1)
+│   │   ├── SettingsManager.gd # Tuş atamaları + ses seviyeleri, ConfigFile (autoload/singleton, v1)
 │   │   ├── Settings.gd        # Tuş atama ekranı mantığı (v1)
 │   │   ├── MainMenu.gd        # Zorluk seçimi, oyunu başlatma (v1)
 │   │   ├── Main.gd            # Oyun sahnesi açılınca turu başlatır

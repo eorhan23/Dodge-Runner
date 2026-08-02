@@ -3,6 +3,10 @@ extends Control
 @onready var rows_container: VBoxContainer = $RowsContainer
 @onready var reset_button: Button = $BottomButtons/ResetButton
 @onready var back_button: Button = $BottomButtons/BackButton
+@onready var music_slider: HSlider = $MusicRow/MusicSlider
+@onready var music_value: Label = $MusicRow/MusicValue
+@onready var sfx_slider: HSlider = $SfxRow/SfxSlider
+@onready var sfx_value: Label = $SfxRow/SfxValue
 
 # Tuş bekleme modundayken hangi yuvanın atandığı; boşsa bekleme yok.
 var _awaiting_entry = null
@@ -12,7 +16,12 @@ var _awaiting_button: Button = null
 func _ready() -> void:
 	reset_button.pressed.connect(_on_reset_pressed)
 	back_button.pressed.connect(_on_back_pressed)
+	music_slider.value_changed.connect(_on_music_changed)
+	sfx_slider.value_changed.connect(_on_sfx_changed)
+	# Sürükleme bitince bir kez örnek ses; sürükleme boyunca çalmak rahatsız edici olurdu.
+	sfx_slider.drag_ended.connect(_on_sfx_drag_ended)
 	_build_rows()
+	_refresh_sliders()
 
 
 func _build_rows() -> void:
@@ -75,10 +84,35 @@ func _input(event: InputEvent) -> void:
 	_refresh_labels()
 
 
+func _refresh_sliders() -> void:
+	# set_value_no_signal: kaydıraçları doldururken value_changed tetiklenip
+	# ayarları gereksizce diske yazmasın.
+	music_slider.set_value_no_signal(SettingsManager.get_music_volume())
+	sfx_slider.set_value_no_signal(SettingsManager.get_sfx_volume())
+	music_value.text = "%d%%" % int(music_slider.value)
+	sfx_value.text = "%d%%" % int(sfx_slider.value)
+
+
+func _on_music_changed(value: float) -> void:
+	SettingsManager.set_music_volume(value)
+	music_value.text = "%d%%" % int(value)
+
+
+func _on_sfx_changed(value: float) -> void:
+	SettingsManager.set_sfx_volume(value)
+	sfx_value.text = "%d%%" % int(value)
+
+
+func _on_sfx_drag_ended(_value_changed: bool) -> void:
+	# Oyuncu seçtiği efekt seviyesini duyabilsin.
+	AudioManager.play_ui_click()
+
+
 func _on_reset_pressed() -> void:
 	AudioManager.play_ui_click()
 	SettingsManager.reset_to_defaults()
 	_refresh_labels()
+	_refresh_sliders()
 
 
 func _on_back_pressed() -> void:

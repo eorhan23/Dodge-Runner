@@ -26,7 +26,7 @@ Kod yazmadan önce şu dosyaları oku — bu CLAUDE.md onların özetidir, tam g
 | Dil | GDScript |
 | Platform | Masaüstü (Windows/Linux/macOS) |
 | Kontrol | Klavye (varsayılan: Yukarı Ok / Boşluk: zıpla, Aşağı Ok: eğil — v1'de değiştirilebilir) |
-| Veri Kalıcılığı | Yok (MVP kapsamında) |
+| Veri Kalıcılığı | MVP'de yok; v1'de `ConfigFile` (`user://stats.cfg`, `user://settings.cfg`) |
 
 ## Klasör Yapısı (bkz. `Architecture.md` §3)
 
