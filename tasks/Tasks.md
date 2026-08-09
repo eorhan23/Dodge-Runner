@@ -87,9 +87,31 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 > Not: `ui_up`/`ui_down` yerine kendi `jump`/`duck` aksiyonları tanımlandı — motorun UI aksiyonlarını değiştirmemek için. "Zıpla" iki atanabilir yuvaya sahiptir (varsayılan: Yukarı Ok, Boşluk); ikisi de değiştirilebilir. Ayarlar ekranında "Varsayılana Sıfırla" seçeneği vardır.
 
-## Backlog — V2 (Şimdilik Uygulanmayacak)
+## Faz 11 — Karakter Seçimi ve Animasyon
 
-Bu maddeler `PRD_v2.md`'de yer alır, kullanıcı açıkça istemedikçe uygulanmaz:
+- [ ] `CharacterManager.gd` scriptini yaz (autoload): seçili karakteri `ConfigFile` ile kalıcı tut (`user://settings.cfg`).
+- [ ] Ana menüye karakter seçim bölgesi ekle (6 karakter: mavi, yeşil, turuncu, mor, beyaz, sarı).
+- [ ] `Player.gd`'ye 3 kareli koşma animasyonu ekle; seçili karakterin sprite'ları kullanılır.
+- [ ] Zıplama ve eğilme durumlarında animasyon yerine sabit kare göster.
 
-- Karakter özelleştirme
-- Güç-yükseltmeler (power-up'lar)
+## Faz 12 — Buff Altyapısı
+
+- [ ] `Buff.tscn` / `Buff.gd` oluştur: engeller gibi sağdan sola hareket eden, `Area2D` ile toplanabilen nesne.
+- [ ] Buff görselini koddan çiz: kademe rengine göre daire (mavi/yeşil/turuncu) + üstünde ikon (kalkan/saat) veya çarpan yazısı (2x/3x/4x).
+- [ ] `BuffManager.gd` scriptini yaz (autoload): aktif buff'ları ve kalan sürelerini takip et, süresi bitenleri kaldır.
+- [ ] Buff toplanınca `get_buff.mp3` çal.
+- [ ] Ekran dışına çıkan toplanmamış buff'ları temizle (`queue_free()`).
+
+## Faz 13 — Buff Etkileri
+
+- [ ] Kalkan: sayılı dokunulmazlık (1/2/3) uygula; çarpışmada hakkı azalt, hak bitince veya süre dolunca kalkanı kaldır.
+- [ ] Zaman: oyun akışını kademeye göre yavaşlat (engeller, arka plan ve zorluk artışı birlikte).
+- [ ] Skor çarpanı: kademeye göre (2x/3x/4x) skor kazanımını çarp.
+- [ ] `GameManager` ve `Obstacle` ile entegrasyon: çarpışma artık kalkan durumunu kontrol etmeli.
+
+## Faz 14 — Buff Üretimi ve Denge
+
+- [ ] `SpawnManager`'a buff üretimi ekle (engellerle çakışmayacak konumlarda).
+- [ ] Nadirlik dağılımını uygula: türler arası eşit, her tür içinde güçlü kademe daha nadir.
+- [ ] Ekranda aktif buff göstergesi (kalan süre / kalan dokunulmazlık).
+- [ ] Playtest ile buff süreleri, çıkma sıklığı ve etki güçlerini dengele.

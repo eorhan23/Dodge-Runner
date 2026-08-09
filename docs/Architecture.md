@@ -28,6 +28,7 @@ dodge-runner/
 │   │   ├── Main.tscn          # Ana oyun sahnesi, oyun döngüsünü yönetir
 │   │   ├── Player.tscn        # Karakter sahnesi (CharacterBody2D)
 │   │   ├── Obstacle.tscn      # Tekil engel sahnesi (Area2D)
+│   │   ├── Buff.tscn          # Toplanabilir güç yükseltmesi (Area2D, v2)
 │   │   └── GameOver.tscn      # Oyun bitti / tekrar oyna ekranı
 │   ├── scripts/
 │   │   ├── Player.gd          # Zıplama/eğilme mantığı, girdi işleme
@@ -37,6 +38,9 @@ dodge-runner/
 │   │   ├── StatsManager.gd    # Yerel istatistik kaydı, ConfigFile (autoload/singleton, v1)
 │   │   ├── AudioManager.gd    # Ses efektleri, müzik, ses yolları (autoload/singleton, v1)
 │   │   ├── SettingsManager.gd # Tuş atamaları + ses seviyeleri, ConfigFile (autoload/singleton, v1)
+│   │   ├── CharacterManager.gd # Seçili karakter, ConfigFile (autoload/singleton, v2)
+│   │   ├── BuffManager.gd     # Aktif buff'lar ve süreleri (autoload/singleton, v2)
+│   │   ├── Buff.gd            # Buff hareketi, görsel çizimi, toplanma (v2)
 │   │   ├── Settings.gd        # Tuş atama ekranı mantığı (v1)
 │   │   ├── MainMenu.gd        # Zorluk seçimi, oyunu başlatma (v1)
 │   │   ├── Main.gd            # Oyun sahnesi açılınca turu başlatır
@@ -45,13 +49,17 @@ dodge-runner/
 │   │   ├── ScoreLabel.gd      # Skor Label'ını GameManager'dan günceller
 │   │   └── ControlsHint.gd    # Başlangıç kontrol talimatını birkaç saniye sonra gizler
 │   └── assets/
-│       ├── sprites/           # pixel-art placeholder sprite'lar
+│       ├── sprites/           # pixel-art sprite'lar
 │       │   ├── player.png
 │       │   ├── obstacle.png
-│       │   └── background.png
+│       │   ├── background.png
+│       │   ├── characters/    # 6 karakter × 3 kare koşma animasyonu (v2)
+│       │   │   ├── blue/ green/ orange/
+│       │   │   └── purple/ white/ yellow/
+│       │   └── buffs/         # protection_buff.png, time_buff.png (v2)
 │       └── audio/             # ses varlıkları (v1)
 │           ├── sfx/
-│           │   ├── game/      # jump.mp3, death.mp3
+│           │   ├── game/      # jump.mp3, death.mp3, get_buff.mp3
 │           │   └── ui/        # click.mp3, start.mp3
 │           └── music/         # background_loop.mp3
 └── demo/                      # Sunum/demo materyalleri
@@ -79,6 +87,20 @@ Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burad
 - Başlangıç hızı ve spawn aralığı sabit bir değerle başlar.
 - Her 10 saniyede bir, hız %8 artırılır (üst sınır 2.2×) ve spawn aralığı %8 kısaltılır (alt sınır orijinalin 0.5×'i) — bkz. `GameManager.gd`.
 - Üst/alt sınırlar sayesinde oyunun "oynanamaz" hale gelmesi engellenir. Bu değerler bir ilk ayar; gerçek oynanabilirlik hissi playtest ile doğrulanıp gerekirse ince ayar yapılacak (bkz. `Tasks.md` Faz 5).
+
+## 6.1. Buff Sistemi (v2)
+
+Üç tür × üç kademe = 9 buff. Türler arasında çıkma olasılığı eşittir; her türün kendi içinde güçlü kademe daha nadirdir (kademeler arası fark abartılı değildir).
+
+| Tür | Kademe 1 | Kademe 2 | Kademe 3 |
+|---|---|---|---|
+| Kalkan | 1 dokunulmazlık | 2 dokunulmazlık | 3 dokunulmazlık |
+| Zaman | Hafif yavaşlatma | Orta yavaşlatma | Güçlü yavaşlatma |
+| Skor Çarpanı | 2x | 3x | 4x |
+
+- **Görsel:** Buff'lar `Obstacle` gibi sağdan sola hareket eder ve `Area2D` ile toplanır. Arka plandaki daire koddan çizilir; rengi **kademeyi** belirtir (kademe 1 = mavi, 2 = yeşil, 3 = turuncu). Tür, dairenin üzerindeki ikondan (`protection_buff.png` / `time_buff.png`) veya koddan yazılan çarpan metninden (2x/3x/4x) anlaşılır — skor çarpanı için ayrı bir görsel varlık yoktur.
+- **Süre:** Tüm buff'ların bir süresi vardır; süre dolunca etki kalkar. Kalkan ayrıca sayılı dokunulmazlık taşır — haklar tükenirse veya süre dolarsa (hangisi önce olursa) kalkan kalkar.
+- **Yönetim:** `BuffManager` (autoload) aktif buff'ları ve kalan sürelerini takip eder; etkiler `GameManager` (skor/zaman) ve `Obstacle` çarpışma yolu (kalkan) üzerinden uygulanır.
 
 ## 7. Kapsam Dışı Bırakılan Teknik Kararlar
 

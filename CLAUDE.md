@@ -42,6 +42,7 @@ dodge-runner/
 │   │   ├── Main.tscn
 │   │   ├── Player.tscn
 │   │   ├── Obstacle.tscn
+│   │   ├── Buff.tscn           # v2
 │   │   └── GameOver.tscn
 │   ├── scripts/
 │   │   ├── Player.gd
@@ -51,6 +52,9 @@ dodge-runner/
 │   │   ├── StatsManager.gd     # autoload/singleton, v1
 │   │   ├── AudioManager.gd     # autoload/singleton, v1
 │   │   ├── SettingsManager.gd  # autoload/singleton, v1
+│   │   ├── CharacterManager.gd # autoload/singleton, v2
+│   │   ├── BuffManager.gd      # autoload/singleton, v2
+│   │   ├── Buff.gd             # v2
 │   │   ├── MainMenu.gd         # v1
 │   │   ├── Settings.gd         # v1
 │   │   ├── Main.gd
@@ -62,7 +66,9 @@ dodge-runner/
 │       ├── sprites/
 │       │   ├── player.png
 │       │   ├── obstacle.png
-│       │   └── background.png
+│       │   ├── background.png
+│       │   ├── characters/     # 6 karakter × 3 kare, v2
+│       │   └── buffs/          # v2
 │       └── audio/              # v1
 │           ├── sfx/
 │           │   ├── game/       # jump.mp3, death.mp3
@@ -89,7 +95,7 @@ Bir sonraki fazın kodu, önceki faz tamamlanmadan yazılmamalıdır — `tasks/
 ## Çalışma Kuralları
 
 - **Faz sırasını bozma.** `tasks/Tasks.md`'deki fazlar birbirine bağımlıdır; bir sonraki fazın kodunu öncekini tamamlamadan yazma.
-- **Kapsam dışına çıkma.** MVP dışı özellikler (`tasks/Tasks.md` sonundaki "Backlog — MVP Dışı" bölümü: mobil kontrol, çoklu seviye, ses/müzik, online skor tablosu, karakter özelleştirme, power-up'lar) açıkça istenmedikçe uygulanmaz.
+- **Kapsam dışına çıkma.** Yalnızca `tasks/Tasks.md`'de tanımlı fazlardaki işler yapılır. İlgili sürümün PRD'sinde (`docs/PRD.md`, `PRD_v1.md`, `PRD_v2.md`) yer almayan özellikler açıkça istenmedikçe uygulanmaz.
 - **Açık sorular** (`Architecture.md` §8) kod ile örtük olarak cevaplanmaz; belirsizlik varsa kullanıcıya sor.
 - Bir görev tamamlandığında `tasks/Tasks.md` içindeki ilgili `- [ ]` kutusunu `- [x]` olarak işaretle.
 - Placeholder görseller yerine artık `src/assets/sprites/` altındaki gerçek pixel-art sprite'lar (`player.png`, `obstacle.png`, `background.png`) kullanılıyor (Faz 5). Yeni görsel ihtiyaçlarında önce bu klasördeki mevcut assetlerin uygun olup olmadığına bakılmalı.

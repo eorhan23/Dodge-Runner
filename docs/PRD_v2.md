@@ -3,7 +3,6 @@ V2 Özellikleri
 Karakter Özelleştirme
 
 * Farklı karakter derileri (skin)
-* Renk seçenekleri
 
 Güç Yükseltmeleri (Power-up)
 
