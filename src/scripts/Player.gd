@@ -9,16 +9,41 @@ const GROUND_Y := 585.0
 const RUN_HEIGHT := 80.0
 const DUCK_HEIGHT := 40.0
 const WIDTH := 40.0
+# Normal oyun hızındaki (speed_multiplier = 1.0) kare tempo; oyun hızlandıkça
+# aynı çarpanla ölçeklenir, böylece koşu animasyonu zemin hızıyla uyumlu kalır.
+const BASE_ANIM_FPS := 10.0
 
 var state: State = State.RUNNING
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var visual: Sprite2D = $Sprite2D
 
+var _frames: Array = []
+var _frame_index := 0
+var _anim_timer := 0.0
+
 
 func _ready() -> void:
 	global_position.x = FIXED_X
+	_frames = CharacterManager.get_frames()
+	_set_static_frame()
 	_update_shape(RUN_HEIGHT)
+
+
+func _process(delta: float) -> void:
+	# Animasyon yalnızca koşarken oynar; zıplama ve eğilmede kare sabit kalır.
+	if state != State.RUNNING or _frames.size() < 3:
+		return
+
+	# Oyun hızlandıkça adımlar da hızlanır (zemin kayma hızıyla aynı çarpan).
+	var fps := BASE_ANIM_FPS * GameManager.speed_multiplier
+	_anim_timer += delta
+	var frame_duration := 1.0 / fps
+	if _anim_timer >= frame_duration:
+		_anim_timer -= frame_duration
+		var run_frames: Array = CharacterManager.RUN_FRAMES
+		_frame_index = (_frame_index + 1) % run_frames.size()
+		visual.texture = _frames[run_frames[_frame_index]]
 
 
 func _physics_process(delta: float) -> void:
@@ -40,14 +65,25 @@ func _physics_process(delta: float) -> void:
 			state = State.JUMPING
 			velocity.y = JUMP_VELOCITY
 			AudioManager.play_jump()
+			_set_static_frame()
 			_update_shape(RUN_HEIGHT)
 		elif Input.is_action_pressed("duck"):
 			if state != State.DUCKING:
 				state = State.DUCKING
+				_set_static_frame()
 				_update_shape(DUCK_HEIGHT)
 		elif state == State.DUCKING:
 			state = State.RUNNING
 			_update_shape(RUN_HEIGHT)
+
+
+func _set_static_frame() -> void:
+	# Zıplama/eğilme sırasında animasyon durur; bacakları bitişik duruş karesi kullanılır.
+	if _frames.size() <= CharacterManager.IDLE_FRAME:
+		return
+	_frame_index = 0
+	_anim_timer = 0.0
+	visual.texture = _frames[CharacterManager.IDLE_FRAME]
 
 
 func _update_shape(height: float) -> void:

@@ -89,10 +89,10 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 11 — Karakter Seçimi ve Animasyon
 
-- [ ] `CharacterManager.gd` scriptini yaz (autoload): seçili karakteri `ConfigFile` ile kalıcı tut (`user://settings.cfg`).
-- [ ] Ana menüye karakter seçim bölgesi ekle (6 karakter: mavi, yeşil, turuncu, mor, beyaz, sarı).
-- [ ] `Player.gd`'ye 3 kareli koşma animasyonu ekle; seçili karakterin sprite'ları kullanılır.
-- [ ] Zıplama ve eğilme durumlarında animasyon yerine sabit kare göster.
+- [x] `CharacterManager.gd` scriptini yaz (autoload): seçili karakteri `ConfigFile` ile kalıcı tut (`user://settings.cfg`).
+- [x] Ana menüye karakter seçim bölgesi ekle (6 karakter: mavi, yeşil, turuncu, mor, beyaz, sarı).
+- [x] `Player.gd`'ye 3 kareli koşma animasyonu ekle; seçili karakterin sprite'ları kullanılır.
+- [x] Zıplama ve eğilme durumlarında animasyon yerine sabit kare göster.
 
 ## Faz 12 — Buff Altyapısı
 
@@ -115,3 +115,13 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 - [ ] Nadirlik dağılımını uygula: türler arası eşit, her tür içinde güçlü kademe daha nadir.
 - [ ] Ekranda aktif buff göstergesi (kalan süre / kalan dokunulmazlık).
 - [ ] Playtest ile buff süreleri, çıkma sıklığı ve etki güçlerini dengele.
+
+## Faz 15 — Son Cilalama ve Proje Kapanışı
+
+Projenin son fazı. Tüm sürümler (MVP, v1, v2) tamamlandıktan sonra yapılır.
+
+- [ ] Tüm dokümanları (`README.md`, `CLAUDE.md`, `docs/*.md`) baştan sona gözden geçir; güncelliğini yitirmiş, çelişkili veya eksik kalmış bütün metinleri düzelt.
+- [ ] Oyunu uçtan uca test et: her zorluk, her karakter, her buff türü/kademesi, menü akışları, ayarlar ve kalıcılık (kapat-aç).
+- [ ] Test sırasında çıkan hataları düzelt.
+- [ ] Genel oynanabilirlik dengesini son kez gözden geçir (zorluk eğrisi, buff sıklığı).
+- [ ] Demo için oynanış kaydı/ekran görüntüsü al, `demo/` klasörüne ekle (MVP Faz 5'ten devreden madde).

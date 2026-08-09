@@ -10,9 +10,13 @@ extends Control
 @onready var games_played_label: Label = $StatsPanel/GamesPlayedLabel
 @onready var average_time_label: Label = $StatsPanel/AverageTimeLabel
 @onready var recent_scores_label: Label = $StatsPanel/RecentScoresLabel
+@onready var character_buttons: HBoxContainer = $CharacterButtons
+
+var _character_buttons: Array = []
 
 
 func _ready() -> void:
+	_build_character_buttons()
 	easy_button.pressed.connect(_on_difficulty_selected.bind(GameManager.Difficulty.EASY))
 	normal_button.pressed.connect(_on_difficulty_selected.bind(GameManager.Difficulty.NORMAL))
 	hard_button.pressed.connect(_on_difficulty_selected.bind(GameManager.Difficulty.HARD))
@@ -20,6 +24,33 @@ func _ready() -> void:
 	settings_button.pressed.connect(_on_settings_pressed)
 	controls_label.text = SettingsManager.get_controls_hint()
 	_sync_selection()
+
+
+func _build_character_buttons() -> void:
+	var group := ButtonGroup.new()
+	for index in CharacterManager.CHARACTERS.size():
+		var button := Button.new()
+		button.custom_minimum_size = Vector2(80, 70)
+		button.toggle_mode = true
+		button.button_group = group
+		button.icon = CharacterManager.get_preview_texture(index)
+		# 16x20 piksel sprite'lar buton içinde küçük kalır; genişleterek büyütüyoruz.
+		button.expand_icon = true
+		button.tooltip_text = CharacterManager.CHARACTERS[index]["label"]
+		button.pressed.connect(_on_character_selected.bind(index))
+		character_buttons.add_child(button)
+		_character_buttons.append(button)
+
+
+func _on_character_selected(index: int) -> void:
+	AudioManager.play_ui_click()
+	CharacterManager.select(index)
+	_sync_character_selection()
+
+
+func _sync_character_selection() -> void:
+	for index in _character_buttons.size():
+		_character_buttons[index].button_pressed = index == CharacterManager.selected_index
 
 
 func _on_difficulty_selected(new_difficulty: GameManager.Difficulty) -> void:
@@ -32,6 +63,7 @@ func _sync_selection() -> void:
 	easy_button.button_pressed = GameManager.difficulty == GameManager.Difficulty.EASY
 	normal_button.button_pressed = GameManager.difficulty == GameManager.Difficulty.NORMAL
 	hard_button.button_pressed = GameManager.difficulty == GameManager.Difficulty.HARD
+	_sync_character_selection()
 	_refresh_stats()
 
 

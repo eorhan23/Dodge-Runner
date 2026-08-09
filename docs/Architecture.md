@@ -70,7 +70,7 @@ Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burad
 ## 4. Sahne (Node) Mimarisi
 
 - **Main.tscn**: Kök sahne. `GameManager` ve `SpawnManager` autoload/singleton olarak proje ayarlarında tanımlanır, sahneye bağımlı değildir.
-- **Player.tscn**: `CharacterBody2D` kök node, altında `CollisionShape2D` (durum değişince — koşma/eğilme — boyutu değişir) ve görsel temsil (`Sprite2D`, `player.png`). Projede fiziksel bir zemin/`Ground` çarpışma gövdesi yoktur; dikey konum script içindeki mantıksal bir zemin sabitiyle yönetilir — bu, §7'deki Area2D-sinyal-tabanlı çarpışma felsefesiyle tutarlıdır.
+- **Player.tscn**: `CharacterBody2D` kök node, altında `CollisionShape2D` (durum değişince — koşma/eğilme — boyutu değişir) ve görsel temsil (`Sprite2D`). v2'den itibaren doku, `CharacterManager`'dan gelen seçili karakterin 3 karesiyle çalışma zamanında değiştirilir (koşarken animasyon, zıplama/eğilmede sabit kare). Projede fiziksel bir zemin/`Ground` çarpışma gövdesi yoktur; dikey konum script içindeki mantıksal bir zemin sabitiyle yönetilir — bu, §7'deki Area2D-sinyal-tabanlı çarpışma felsefesiyle tutarlıdır.
 - **Obstacle.tscn**: `Area2D` kök node (fiziksel çarpma yerine sinyal tabanlı tespit tercih edilir — daha basit ve MVP'ye uygun), görsel temsil `Sprite2D` (`obstacle.png`; tavandan sarkan varyantta dikey çevrilip tavana kadar uzatılır), `body_entered` sinyali `Player`'ın `"player"` grubunda olup olmadığını kontrol edip `GameManager.game_over()`'ı tetikler.
 - **Main.tscn**: yukarıdakilere ek olarak statik bir arka plan (`Sprite2D`, `background.png`), skor `Label`'ı (`ScoreLabel.gd`) ve başlangıç kontrol talimatı `Label`'ı (`ControlsHint.gd`) barındırır.
 
@@ -106,7 +106,7 @@ Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burad
 
 - **Fizik motoru tabanlı çarpışma (RigidBody2D) kullanılmayacak** — Area2D sinyal tabanlı yaklaşım, MVP için yeterli ve daha öngörülebilir.
 - **Veritabanı / online skor tablosu yok** — bu proje tamamen yerel/çevrimdışı çalışır, bu yüzden `Database.md` ve `API.md` dosyaları bu proje kapsamında oluşturulmamıştır. (v1'de istatistikler `ConfigFile` ile `user://stats.cfg`'ye yazılır; bu yerel bir dosyadır, çevrimdışı çalışma değişmez.)
-- **Ses/müzik sistemi MVP'de yok** — ilerleyen fazlarda opsiyonel olarak eklenebilir.
+- **Ses/müzik sistemi** MVP kapsamında değildi; v1'de eklendi (bkz. `AudioManager.gd`, ses efektleri + müzik + ayarlanabilir ses seviyeleri).
 
 ## 8. Açık Sorular
 

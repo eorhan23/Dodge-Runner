@@ -21,6 +21,7 @@ SpawnManager="*res://scripts/SpawnManager.gd"
 AudioManager="*res://scripts/AudioManager.gd"
 StatsManager="*res://scripts/StatsManager.gd"
 SettingsManager="*res://scripts/SettingsManager.gd"
+CharacterManager="*res://scripts/CharacterManager.gd"
 
 [display]
 
