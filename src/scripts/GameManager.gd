@@ -64,6 +64,7 @@ func set_difficulty(new_difficulty: Difficulty) -> void:
 func start_game() -> void:
 	reset()
 	SpawnManager.reset()
+	BuffManager.reset()
 	AudioManager.start_music()
 	is_running = true
 

@@ -96,11 +96,13 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 12 — Buff Altyapısı
 
-- [ ] `Buff.tscn` / `Buff.gd` oluştur: engeller gibi sağdan sola hareket eden, `Area2D` ile toplanabilen nesne.
-- [ ] Buff görselini koddan çiz: kademe rengine göre daire (mavi/yeşil/turuncu) + üstünde ikon (kalkan/saat) veya çarpan yazısı (2x/3x/4x).
-- [ ] `BuffManager.gd` scriptini yaz (autoload): aktif buff'ları ve kalan sürelerini takip et, süresi bitenleri kaldır.
-- [ ] Buff toplanınca `get_buff.mp3` çal.
-- [ ] Ekran dışına çıkan toplanmamış buff'ları temizle (`queue_free()`).
+- [x] `Buff.tscn` / `Buff.gd` oluştur: engeller gibi sağdan sola hareket eden, `Area2D` ile toplanabilen nesne.
+- [x] Buff görselini koddan çiz: kademe rengine göre daire (mavi/yeşil/turuncu) + üstünde ikon (kalkan/saat) veya çarpan yazısı (2x/3x/4x).
+- [x] `BuffManager.gd` scriptini yaz (autoload): aktif buff'ları ve kalan sürelerini takip et, süresi bitenleri kaldır.
+- [x] Buff toplanınca `get_buff.mp3` çal.
+- [x] Ekran dışına çıkan toplanmamış buff'ları temizle (`queue_free()`).
+
+> Not: Buff türleri/kademeleri ve etki değerleri `BuffManager.DEFINITIONS` içinde tek yerde tanımlıdır. Daire, ayrı bir görsel varlık yerine `BuffCircle.gd` ile koddan çizilir.
 
 ## Faz 13 — Buff Etkileri
 

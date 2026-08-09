@@ -2,6 +2,7 @@ extends Node
 
 const JUMP_SFX := preload("res://assets/audio/sfx/game/jump.mp3")
 const DEATH_SFX := preload("res://assets/audio/sfx/game/death.mp3")
+const GET_BUFF_SFX := preload("res://assets/audio/sfx/game/get_buff.mp3")
 const UI_CLICK_SFX := preload("res://assets/audio/sfx/ui/click.mp3")
 const UI_START_SFX := preload("res://assets/audio/sfx/ui/start.mp3")
 const MUSIC := preload("res://assets/audio/music/background_loop.mp3")
@@ -11,6 +12,7 @@ const SFX_BUS := "SFX"
 
 var jump_player: AudioStreamPlayer
 var death_player: AudioStreamPlayer
+var get_buff_player: AudioStreamPlayer
 var ui_click_player: AudioStreamPlayer
 var ui_start_player: AudioStreamPlayer
 var music_player: AudioStreamPlayer
@@ -25,6 +27,7 @@ func _ready() -> void:
 
 	jump_player = _create_player(JUMP_SFX, SFX_BUS)
 	death_player = _create_player(DEATH_SFX, SFX_BUS)
+	get_buff_player = _create_player(GET_BUFF_SFX, SFX_BUS)
 	ui_click_player = _create_player(UI_CLICK_SFX, SFX_BUS)
 	ui_start_player = _create_player(UI_START_SFX, SFX_BUS)
 	music_player = _create_player(MUSIC, MUSIC_BUS)
@@ -84,6 +87,10 @@ func play_jump() -> void:
 
 func play_death() -> void:
 	death_player.play()
+
+
+func play_get_buff() -> void:
+	get_buff_player.play()
 
 
 func play_ui_click() -> void:

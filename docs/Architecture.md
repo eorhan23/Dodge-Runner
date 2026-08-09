@@ -41,6 +41,7 @@ dodge-runner/
 │   │   ├── CharacterManager.gd # Seçili karakter, ConfigFile (autoload/singleton, v2)
 │   │   ├── BuffManager.gd     # Aktif buff'lar ve süreleri (autoload/singleton, v2)
 │   │   ├── Buff.gd            # Buff hareketi, görsel çizimi, toplanma (v2)
+│   │   ├── BuffCircle.gd      # Buff arka planındaki renkli daireyi çizer (v2)
 │   │   ├── Settings.gd        # Tuş atama ekranı mantığı (v1)
 │   │   ├── MainMenu.gd        # Zorluk seçimi, oyunu başlatma (v1)
 │   │   ├── Main.gd            # Oyun sahnesi açılınca turu başlatır
