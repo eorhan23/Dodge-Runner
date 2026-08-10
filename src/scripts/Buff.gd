@@ -17,6 +17,8 @@ const SPEED_FACTOR := 1.0
 
 
 func _ready() -> void:
+	# Engel üretimi, buff'ların dibine engel koymamak için bu grubu tarar.
+	add_to_group("buff")
 	_apply_visual()
 	body_entered.connect(_on_body_entered)
 
@@ -28,7 +30,7 @@ func _process(delta: float) -> void:
 
 
 func current_speed() -> float:
-	return SpawnManager.BASE_SPEED * SPEED_FACTOR * GameManager.speed_multiplier
+	return SpawnManager.BASE_SPEED * SPEED_FACTOR * GameManager.effective_speed_multiplier()
 
 
 func _apply_visual() -> void:

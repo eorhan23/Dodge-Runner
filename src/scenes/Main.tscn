@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://be3w8msl02ark" path="res://scripts/ControlsHint.gd" id="4"]
 [ext_resource type="Script" uid="uid://masb0ce5iwbv" path="res://scripts/Main.gd" id="5"]
 [ext_resource type="Script" uid="uid://bjdu6gsjmydbp" path="res://scripts/ScrollingBackground.gd" id="6"]
+[ext_resource type="Script" uid="uid://dhsm3l5v33rvi" path="res://scripts/BuffIndicator.gd" id="7"]
 
 [node name="Main" type="Node2D" unique_id=1483584541]
 script = ExtResource("5")
@@ -26,6 +27,14 @@ offset_bottom = 52.0
 theme_override_font_sizes/font_size = 24
 text = "Skor: 0"
 script = ExtResource("2")
+
+[node name="BuffIndicator" type="VBoxContainer" parent="." unique_id=345012534]
+offset_left = 20.0
+offset_top = 60.0
+offset_right = 320.0
+offset_bottom = 160.0
+theme_override_constants/separation = 4
+script = ExtResource("7")
 
 [node name="ControlsHintLabel" type="Label" parent="." unique_id=1610312940]
 offset_left = 340.0

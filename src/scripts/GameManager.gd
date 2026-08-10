@@ -39,6 +39,9 @@ var is_game_over: bool = false
 var is_running: bool = false
 
 var _difficulty_timer: float = 0.0
+# Skor artık elapsed_time'dan türetilemez: çarpan zaman içinde değiştiği için
+# kazanım kare kare biriktirilir.
+var _score_accumulator: float = 0.0
 
 
 func _process(delta: float) -> void:
@@ -46,14 +49,22 @@ func _process(delta: float) -> void:
 		return
 
 	elapsed_time += delta
-	score = int(elapsed_time * SCORE_PER_SECOND)
+	_score_accumulator += delta * SCORE_PER_SECOND * BuffManager.get_score_multiplier()
+	score = int(_score_accumulator)
 
-	_difficulty_timer += delta
+	# Zaman buff'ı aktifken zorluk artışı da yavaşlar; oyunun geneli birlikte yavaşlar.
+	_difficulty_timer += delta * BuffManager.get_time_slow_factor()
 	if _difficulty_timer >= DIFFICULTY_INTERVAL:
 		_difficulty_timer -= DIFFICULTY_INTERVAL
 		var settings: Dictionary = DIFFICULTY_SETTINGS[difficulty]
 		speed_multiplier = min(speed_multiplier * (1.0 + SPEED_INCREASE), settings["max_speed"])
 		spawn_interval_multiplier = max(spawn_interval_multiplier * (1.0 - SPAWN_INTERVAL_DECREASE), settings["min_spawn"])
+
+
+func effective_speed_multiplier() -> float:
+	# Ekranda hareket eden her şeyin (engeller, buff'lar, arka plan, koşu animasyonu)
+	# kullanması gereken hız çarpanı; zaman buff'ı burada devreye girer.
+	return speed_multiplier * BuffManager.get_time_slow_factor()
 
 
 func set_difficulty(new_difficulty: Difficulty) -> void:
@@ -89,5 +100,6 @@ func reset() -> void:
 	speed_multiplier = settings["start_speed"]
 	spawn_interval_multiplier = settings["start_spawn"]
 	_difficulty_timer = 0.0
+	_score_accumulator = 0.0
 	is_game_over = false
 	is_running = false

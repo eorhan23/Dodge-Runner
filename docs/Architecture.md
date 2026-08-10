@@ -42,6 +42,8 @@ dodge-runner/
 │   │   ├── BuffManager.gd     # Aktif buff'lar ve süreleri (autoload/singleton, v2)
 │   │   ├── Buff.gd            # Buff hareketi, görsel çizimi, toplanma (v2)
 │   │   ├── BuffCircle.gd      # Buff arka planındaki renkli daireyi çizer (v2)
+│   │   ├── BuffIndicator.gd   # Aktif buff'ları ve kalan süreleri gösterir (v2)
+│   │   ├── ShieldEffect.gd    # Kalkan aktifken karakteri saran halkayı çizer (v2)
 │   │   ├── Settings.gd        # Tuş atama ekranı mantığı (v1)
 │   │   ├── MainMenu.gd        # Zorluk seçimi, oyunu başlatma (v1)
 │   │   ├── Main.gd            # Oyun sahnesi açılınca turu başlatır
@@ -99,7 +101,7 @@ Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burad
 | Zaman | Hafif yavaşlatma | Orta yavaşlatma | Güçlü yavaşlatma |
 | Skor Çarpanı | 2x | 3x | 4x |
 
-- **Görsel:** Buff'lar `Obstacle` gibi sağdan sola hareket eder ve `Area2D` ile toplanır. Arka plandaki daire koddan çizilir; rengi **kademeyi** belirtir (kademe 1 = mavi, 2 = yeşil, 3 = turuncu). Tür, dairenin üzerindeki ikondan (`protection_buff.png` / `time_buff.png`) veya koddan yazılan çarpan metninden (2x/3x/4x) anlaşılır — skor çarpanı için ayrı bir görsel varlık yoktur.
+- **Görsel:** Buff'lar `Obstacle` gibi sağdan sola hareket eder ve `Area2D` ile toplanır. Arka plandaki daire koddan çizilir; rengi **kademeyi** belirtir (kademe 1 = yeşil, 2 = mavi, 3 = kırmızı). Aynı renk kodu sol üstteki aktif buff göstergesinde ve kalkan halkasında da kullanılır. Tür, dairenin üzerindeki ikondan (`protection_buff.png` / `time_buff.png`) veya koddan yazılan çarpan metninden (2x/3x/4x) anlaşılır — skor çarpanı için ayrı bir görsel varlık yoktur.
 - **Süre:** Tüm buff'ların bir süresi vardır; süre dolunca etki kalkar. Kalkan ayrıca sayılı dokunulmazlık taşır — haklar tükenirse veya süre dolarsa (hangisi önce olursa) kalkan kalkar.
 - **Yönetim:** `BuffManager` (autoload) aktif buff'ları ve kalan sürelerini takip eder; etkiler `GameManager` (skor/zaman) ve `Obstacle` çarpışma yolu (kalkan) üzerinden uygulanır.
 

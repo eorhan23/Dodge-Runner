@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c0p0n5brcbv3o" path="res://scripts/Player.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://brvkgw7hngq64" path="res://assets/sprites/player.png" id="2"]
+[ext_resource type="Script" path="res://scripts/ShieldEffect.gd" id="3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(40, 80)
@@ -14,3 +15,6 @@ shape = SubResource("RectangleShape2D_1")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1852593124]
 texture = ExtResource("2")
+
+[node name="ShieldEffect" type="Node2D" parent="."]
+script = ExtResource("3")

@@ -26,17 +26,19 @@ var _anim_timer := 0.0
 func _ready() -> void:
 	global_position.x = FIXED_X
 	_frames = CharacterManager.get_frames()
-	_set_static_frame()
+	if not _frames.is_empty():
+		visual.texture = _frames[CharacterManager.RUN_FRAMES[0]]
 	_update_shape(RUN_HEIGHT)
 
 
 func _process(delta: float) -> void:
-	# Animasyon yalnızca koşarken oynar; zıplama ve eğilmede kare sabit kalır.
-	if state != State.RUNNING or _frames.size() < 3:
+	# Koşma ve eğilme sırasında adımlar akmaya devam eder; yalnızca havadayken
+	# animasyon durur (bkz. _set_jump_frame).
+	if state == State.JUMPING or _frames.size() < 3:
 		return
 
 	# Oyun hızlandıkça adımlar da hızlanır (zemin kayma hızıyla aynı çarpan).
-	var fps := BASE_ANIM_FPS * GameManager.speed_multiplier
+	var fps := BASE_ANIM_FPS * GameManager.effective_speed_multiplier()
 	_anim_timer += delta
 	var frame_duration := 1.0 / fps
 	if _anim_timer >= frame_duration:
@@ -65,25 +67,24 @@ func _physics_process(delta: float) -> void:
 			state = State.JUMPING
 			velocity.y = JUMP_VELOCITY
 			AudioManager.play_jump()
-			_set_static_frame()
+			_set_jump_frame()
 			_update_shape(RUN_HEIGHT)
 		elif Input.is_action_pressed("duck"):
 			if state != State.DUCKING:
 				state = State.DUCKING
-				_set_static_frame()
 				_update_shape(DUCK_HEIGHT)
 		elif state == State.DUCKING:
 			state = State.RUNNING
 			_update_shape(RUN_HEIGHT)
 
 
-func _set_static_frame() -> void:
-	# Zıplama/eğilme sırasında animasyon durur; bacakları bitişik duruş karesi kullanılır.
-	if _frames.size() <= CharacterManager.IDLE_FRAME:
+func _set_jump_frame() -> void:
+	# Havadayken animasyon durur ve bir ayağı önde olan adım karesi sabit kalır;
+	# bu, zıplama pozu olarak duruş karesinden daha doğal görünür.
+	if _frames.size() <= CharacterManager.JUMP_FRAME:
 		return
-	_frame_index = 0
 	_anim_timer = 0.0
-	visual.texture = _frames[CharacterManager.IDLE_FRAME]
+	visual.texture = _frames[CharacterManager.JUMP_FRAME]
 
 
 func _update_shape(height: float) -> void:

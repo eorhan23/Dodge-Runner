@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 	# formül (BASE_SPEED * BASE_FACTOR * speed_multiplier), her karede yeniden
 	# hesaplandığı için zorluk arttıkça ikisi birlikte hızlanır. region_rect doku
 	# uzayında olduğundan, sprite'ın ölçeğine bölerek ekran hızını eşitliyoruz.
-	var screen_speed := SpawnManager.BASE_SPEED * SpawnManager.BASE_FACTOR * GameManager.speed_multiplier
+	var screen_speed := SpawnManager.BASE_SPEED * SpawnManager.BASE_FACTOR * GameManager.effective_speed_multiplier()
 	region_rect.position.x += screen_speed / scale.x * delta
 
 	# Tam bir görsel genişliği kaydıkça başa sar; sayı büyümesin ve dikiş görünmesin.

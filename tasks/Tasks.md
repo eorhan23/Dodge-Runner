@@ -106,17 +106,21 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 
 ## Faz 13 — Buff Etkileri
 
-- [ ] Kalkan: sayılı dokunulmazlık (1/2/3) uygula; çarpışmada hakkı azalt, hak bitince veya süre dolunca kalkanı kaldır.
-- [ ] Zaman: oyun akışını kademeye göre yavaşlat (engeller, arka plan ve zorluk artışı birlikte).
-- [ ] Skor çarpanı: kademeye göre (2x/3x/4x) skor kazanımını çarp.
-- [ ] `GameManager` ve `Obstacle` ile entegrasyon: çarpışma artık kalkan durumunu kontrol etmeli.
+- [x] Kalkan: sayılı dokunulmazlık (1/2/3) uygula; çarpışmada hakkı azalt, hak bitince veya süre dolunca kalkanı kaldır.
+- [x] Zaman: oyun akışını kademeye göre yavaşlat (engeller, arka plan ve zorluk artışı birlikte).
+- [x] Skor çarpanı: kademeye göre (2x/3x/4x) skor kazanımını çarp.
+- [x] `GameManager` ve `Obstacle` ile entegrasyon: çarpışma artık kalkan durumunu kontrol etmeli.
+
+> Not: Hareket eden her şey `GameManager.effective_speed_multiplier()` kullanır — zaman buff'ı tek noktadan uygulanır. Skor, çarpan zamanla değiştiği için artık `elapsed_time`'dan türetilmez, kare kare biriktirilir.
 
 ## Faz 14 — Buff Üretimi ve Denge
 
-- [ ] `SpawnManager`'a buff üretimi ekle (engellerle çakışmayacak konumlarda).
-- [ ] Nadirlik dağılımını uygula: türler arası eşit, her tür içinde güçlü kademe daha nadir.
-- [ ] Ekranda aktif buff göstergesi (kalan süre / kalan dokunulmazlık).
+- [x] `SpawnManager`'a buff üretimi ekle (engellerle çakışmayacak konumlarda).
+- [x] Nadirlik dağılımını uygula: türler arası eşit, her tür içinde güçlü kademe daha nadir.
+- [x] Ekranda aktif buff göstergesi (kalan süre / kalan dokunulmazlık).
 - [ ] Playtest ile buff süreleri, çıkma sıklığı ve etki güçlerini dengele.
+
+> Not: Buff üretimi engel ritmine karışmasın diye ayrı bir `Timer` kullanır (7-12 sn aralık). Kademe ağırlıkları `SpawnManager.TIER_WEIGHTS` (45/33/22). Zaman yavaşlatma yalnızca dış dünyayı etkiler; zıplama fiziği ve skor kazanımı gerçek zamanda kalır.
 
 ## Faz 15 — Son Cilalama ve Proje Kapanışı
 

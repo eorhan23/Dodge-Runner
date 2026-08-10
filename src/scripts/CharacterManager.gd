@@ -8,6 +8,8 @@ const SECTION := "character"
 # "geçiş" pozu görevi görür, bu yüzden döngü üç kareyi sırayla oynatır.
 const IDLE_FRAME := 1
 const RUN_FRAMES := [0, 1, 2]
+# Havadayken sabitlenen kare: bir ayağı önde, zıplama pozuna en yakın olan.
+const JUMP_FRAME := 2
 
 # Her karakterin 3 koşma karesi. Dosya adları karakterden karaktere farklı
 # olduğu için tam yolları burada tutuyoruz.

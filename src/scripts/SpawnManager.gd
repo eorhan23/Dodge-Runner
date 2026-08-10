@@ -1,6 +1,7 @@
 extends Node
 
 const OBSTACLE_SCENE := preload("res://scenes/Obstacle.tscn")
+const BUFF_SCENE := preload("res://scenes/Buff.tscn")
 
 const SPAWN_X := 1330.0
 const PLAYER_X := 200.0
@@ -15,7 +16,26 @@ const MIN_SPAWN_INTERVAL := 1.2
 const MAX_SPAWN_INTERVAL := 2.2
 const FIRST_SPAWN_DELAY := 2.0
 
+# Buff üretimi engel ritminden bağımsız kendi zamanlayıcısıyla çalışır.
+const MIN_BUFF_INTERVAL := 7.0
+const MAX_BUFF_INTERVAL := 12.0
+const FIRST_BUFF_DELAY := 6.0
+# Buff'ın toplanabileceği yükseklikler: zeminde koşarken ve zıplarken erişilebilir
+# iki bant. Engellerle aynı hatta olmadıkları için çakışma riski düşük.
+const BUFF_LOW_Y := 545.0
+const BUFF_HIGH_Y := 450.0
+# Buff ile engel arasında bırakılan en az yatay mesafe. Engel genişliği (40) ve
+# buff yarıçapı (26) toplamının çok üzerinde; oyuncunun engeli aşıp buff'ı
+# toplayabilmesi için rahat bir pay bırakır.
+const BUFF_GAP := 220.0
+# Buff'a çok yakın düşecek bir engel üretimi bu kadar ertelenir; bu sürede buff
+# sola kayarak aradaki mesafeyi açar.
+const BUFF_RETRY_DELAY := 0.35
+# Kademe olasılıkları: güçlü kademe daha nadir, ama fark abartılı değil.
+const TIER_WEIGHTS := [45, 33, 22]
+
 var timer: Timer
+var buff_timer: Timer
 
 var _last_ground_obstacle = null
 var _last_top_obstacle = null
@@ -29,6 +49,12 @@ func _ready() -> void:
 	add_child(timer)
 	_start_timer()
 
+	buff_timer = Timer.new()
+	buff_timer.one_shot = true
+	buff_timer.timeout.connect(_on_buff_timer_timeout)
+	add_child(buff_timer)
+	_start_buff_timer()
+
 
 func reset() -> void:
 	# Sahne yeniden yüklendiğinde eski engel referansları geçersizleşir.
@@ -39,6 +65,8 @@ func reset() -> void:
 	# tur başında sıfırlanmazsa ilk engel oyun açılır açılmaz belirebilir.
 	if timer:
 		timer.start(FIRST_SPAWN_DELAY)
+	if buff_timer:
+		buff_timer.start(FIRST_BUFF_DELAY)
 
 
 func _start_timer() -> void:
@@ -48,9 +76,91 @@ func _start_timer() -> void:
 
 func _on_timer_timeout() -> void:
 	# Yalnızca oyun sahnesi aktifken engel üret; menüdeyken üretim durur.
-	if GameManager.is_running:
-		_spawn_random_obstacle()
+	if not GameManager.is_running:
+		_start_timer()
+		return
+
+	# Buff'lar sağdaki üretim noktasının ötesine yerleştiği için, sonradan doğan
+	# bir engel onların dibine denk gelebilir. Bu durumda engeli biraz geciktirip
+	# aradaki mesafeyi koruyoruz (buff'lar seyrek olduğu için ritim bozulmaz).
+	if not _is_clear_of_buffs():
+		timer.start(BUFF_RETRY_DELAY)
+		return
+
+	_spawn_random_obstacle()
 	_start_timer()
+
+
+func _is_clear_of_buffs() -> bool:
+	# Çift engel varyantı SPAWN_X + 220'ye de üretim yapabildiği için iki nokta da
+	# kontrol edilir.
+	for buff in get_tree().get_nodes_in_group("buff"):
+		if not is_instance_valid(buff):
+			continue
+		if absf(buff.position.x - SPAWN_X) < BUFF_GAP:
+			return false
+		if absf(buff.position.x - (SPAWN_X + 220.0)) < BUFF_GAP:
+			return false
+	return true
+
+
+func _start_buff_timer() -> void:
+	buff_timer.start(randf_range(MIN_BUFF_INTERVAL, MAX_BUFF_INTERVAL))
+
+
+func _on_buff_timer_timeout() -> void:
+	if GameManager.is_running:
+		_spawn_random_buff()
+	_start_buff_timer()
+
+
+func _spawn_random_buff() -> void:
+	# Türler arasında eşit olasılık; kademe içinde güçlü olan daha nadir.
+	var type: int = randi() % BuffManager.Type.size()
+	var tier := _pick_tier()
+
+	var buff := BUFF_SCENE.instantiate()
+	buff.buff_type = type
+	buff.tier = tier
+	buff.position.x = _find_free_buff_x()
+	# Yüksek bant zıplamayı gerektirir; ikisi arasında rastgele seçim çeşitlilik verir.
+	buff.position.y = BUFF_LOW_Y if randi() % 2 == 0 else BUFF_HIGH_Y
+	get_tree().current_scene.add_child(buff)
+
+
+func _find_free_buff_x() -> float:
+	# Buff ve engeller aynı hızda aktığı için aralarındaki yatay mesafe sabit kalır;
+	# üretim anında yeterli boşluk bırakmak, buff'ın engel içinde kalmasını kalıcı
+	# olarak önler. Boşluk bulunamazsa en uzak aday yine de kullanılabilir olur.
+	var obstacles := get_tree().get_nodes_in_group("obstacle")
+
+	for step in 6:
+		var candidate := SPAWN_X + step * BUFF_GAP
+		var is_free := true
+		for obstacle in obstacles:
+			if not is_instance_valid(obstacle):
+				continue
+			if absf(obstacle.position.x - candidate) < BUFF_GAP:
+				is_free = false
+				break
+		if is_free:
+			return candidate
+
+	return SPAWN_X + 6 * BUFF_GAP
+
+
+func _pick_tier() -> int:
+	var total := 0
+	for weight in TIER_WEIGHTS:
+		total += weight
+
+	var roll := randi() % total
+	var cumulative := 0
+	for index in TIER_WEIGHTS.size():
+		cumulative += TIER_WEIGHTS[index]
+		if roll < cumulative:
+			return index
+	return 0
 
 
 func _spawn_random_obstacle() -> void:

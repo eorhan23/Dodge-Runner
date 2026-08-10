@@ -16,6 +16,8 @@ const DESPAWN_X := -100.0
 
 
 func _ready() -> void:
+	# Buff üretimi, engellerin içine denk gelmemek için bu grubu tarar.
+	add_to_group("obstacle")
 	_apply_shape()
 	body_entered.connect(_on_body_entered)
 
@@ -27,7 +29,7 @@ func _process(delta: float) -> void:
 
 
 func current_speed() -> float:
-	return SpawnManager.BASE_SPEED * speed_factor * GameManager.speed_multiplier
+	return SpawnManager.BASE_SPEED * speed_factor * GameManager.effective_speed_multiplier()
 
 
 func _apply_shape() -> void:
@@ -47,5 +49,14 @@ func _apply_shape() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		GameManager.game_over()
+	if not body.is_in_group("player"):
+		return
+
+	AudioManager.play_hit()
+
+	# Kalkan varsa bir hak harcanır ve engel yok edilir; oyuncu ölmez.
+	if BuffManager.consume_shield_charge():
+		queue_free()
+		return
+
+	GameManager.game_over()
