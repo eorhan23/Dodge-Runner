@@ -12,11 +12,15 @@ Bu dosya, bu repoda çalışırken Claude Code'a (claude.ai/code) rehberlik eder
 
 Kod yazmadan önce şu dosyaları oku — bu CLAUDE.md onların özetidir, tam gerçek kaynak değildir:
 
-- **`docs/PRD.md`** — MVP kapsamı: hangi özellikler var, hangileri yok.
-- **`docs/Architecture.md`** — teknik mimari: klasör yapısı, sahne (node) yapısı, oyun döngüsü mantığı, zorluk artışı kuralları.
+- **`docs/PRD.md`** (ve `PRD_v1.md`, `PRD_v2.md`) — sürüm bazlı kapsam: hangi özellikler var, hangileri yok.
+- **`docs/Architecture.md`** — teknik mimari: klasör yapısı, sahne (node) yapısı, oyun döngüsü mantığı, zorluk artışı ve kaçılamaz durum kuralları.
+- **`docs/Modules.md`** — modül sorumlulukları ve modüller arası bağımlılık kuralları.
 - **`docs/Problem.md`** — çözülmeye çalışılan problem ve motivasyon.
 - **`docs/UserStories.md`** — kullanıcı hikayeleri ve kabul kriterleri.
 - **`tasks/Tasks.md`** — fazlara bölünmüş, atomik görev listesi. Fazlar sıralı bağımlılık taşır (Faz N, Faz N-1'e dayanır); bir faz içindeki bağımsız maddeler paralel yapılabilir. Bir görevi tamamlayınca ilgili kutuyu `- [x]` olarak işaretle.
+- **`tasks/DefinitionOfDone.md`** — bir işin "bitti" sayılması için karşılanması gereken ölçütler.
+
+Ayrıca `docs/Database.md` (ConfigFile veri şeması), `docs/API.md` (dahili modül arayüzleri), `docs/Roadmap.md`, `docs/UserPersona.md`, `tasks/Sprint.md`, `tasks/Prompts.md` ve `demo/Demo.md` referans olarak bulunur.
 
 ## Teknoloji Yığını
 
@@ -32,8 +36,10 @@ Kod yazmadan önce şu dosyaları oku — bu CLAUDE.md onların özetidir, tam g
 
 ```
 dodge-runner/
+├── README.md
+├── RELEASE_NOTES.md          # Sürüm notları
 ├── docs/                     # Dokümantasyon
-├── tasks/                    # Görev takibi
+├── tasks/                    # Görev takibi ve süreç dosyaları
 ├── src/                      # Godot projesi kökü (project.godot burada)
 │   ├── project.godot
 │   ├── scenes/
@@ -55,6 +61,9 @@ dodge-runner/
 │   │   ├── CharacterManager.gd # autoload/singleton, v2
 │   │   ├── BuffManager.gd      # autoload/singleton, v2
 │   │   ├── Buff.gd             # v2
+│   │   ├── BuffCircle.gd       # v2, daireyi koddan çizer
+│   │   ├── BuffIndicator.gd    # v2, aktif etki göstergesi
+│   │   ├── ShieldEffect.gd     # v2, kalkan halkası
 │   │   ├── MainMenu.gd         # v1
 │   │   ├── Settings.gd         # v1
 │   │   ├── Main.gd
@@ -71,10 +80,10 @@ dodge-runner/
 │       │   └── buffs/          # v2
 │       └── audio/              # v1
 │           ├── sfx/
-│           │   ├── game/       # jump.mp3, death.mp3
+│           │   ├── game/       # jump.mp3, death.mp3, hit.mp3, get_buff.mp3
 │           │   └── ui/         # click.mp3, start.mp3
 │           └── music/          # background_loop.mp3
-└── demo/
+└── demo/                       # Demo senaryosu ve ekran görüntüleri
 ```
 
 **Kural:** Godot'un otomatik oluşturduğu `.godot/`, `.import/` gibi klasör/dosyalar `.gitignore` ile hariç tutulur, asla commit edilmez.
@@ -84,7 +93,9 @@ dodge-runner/
 - **Karakter hareketi:** Karakter sabit x-konumunda kalır; dünya (engeller) sağdan sola hareket eder. Karakteri hareket ettirme.
 - **Çarpışma tespiti:** `RigidBody2D` fizik motoru değil, `Area2D` sinyal tabanlı yaklaşım kullanılır (bkz. `Architecture.md` §7).
 - **Zorluk artışı:** Kademeli olmalı, ani sıçramalar olmamalı. Üst sınır konularak oyunun oynanamaz hale gelmesi engellenir (bkz. `Architecture.md` §6).
+- **Kaçılamaz durum yasağı:** Hiçbir engel dizilimi, doğru oynayan oyuncunun ölmesine yol açmamalıdır. Oyuncuya tepki payı bırakan mesafeler **piksel değil zaman** cinsinden hesaplanır — zıplama süresi oyun hızından bağımsız sabit olduğu için, sabit piksel mesafesi yüksek hızlarda kaçılamaz hale gelir (bkz. `Architecture.md` §6.1).
 - **Durum yönetimi:** Karakterin `Running` / `Jumping` / `Ducking` durumları arasında geçiş net olmalı, her durumun kendi çarpışma şekli vardır.
+- **Denge değerleri tek yerde:** Hız/süre/olasılık gibi sayısal ayarlar koda dağıtılmaz; `GameManager.DIFFICULTY_SETTINGS`, `BuffManager.DEFINITIONS` ve `SpawnManager` sabitlerinde tutulur.
 
 ## Geliştirme Komutları
 

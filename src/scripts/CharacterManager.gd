@@ -87,7 +87,22 @@ func select(index: int) -> void:
 	if index < 0 or index >= CHARACTERS.size():
 		return
 	selected_index = index
+	# settings.cfg SettingsManager ile paylaşılır ve her ikisi de kendi ConfigFile
+	# nesnesini tutar. Yazmadan önce diskten okumazsak, bizim bellekteki eski
+	# kopyamız aradan geçen ses/tuş kayıtlarını silerek dosyayı geri alır.
+	_config.load(SAVE_PATH)
 	_config.set_value(SECTION, "selected", index)
+	_config.save(SAVE_PATH)
+
+
+func reset_to_default() -> void:
+	# settings.cfg, SettingsManager ile paylaşıldığı için dosyayı silmek yerine
+	# yalnızca kendi bölümümüz temizlenir. Dosya diskten yeniden okunur, çünkü
+	# SettingsManager kendi kopyasını bu arada kaydetmiş olabilir.
+	selected_index = 0
+	_config.load(SAVE_PATH)
+	if _config.has_section(SECTION):
+		_config.erase_section(SECTION)
 	_config.save(SAVE_PATH)
 
 

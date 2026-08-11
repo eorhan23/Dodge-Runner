@@ -104,9 +104,9 @@ vertical_alignment = 1
 text = "100%"
 
 [node name="BottomButtons" type="HBoxContainer" parent="."]
-offset_left = 430.0
+offset_left = 300.0
 offset_top = 600.0
-offset_right = 850.0
+offset_right = 980.0
 offset_bottom = 650.0
 theme_override_constants/separation = 20
 alignment = 1
@@ -116,7 +116,21 @@ custom_minimum_size = Vector2(200, 50)
 theme_override_font_sizes/font_size = 20
 text = "Varsayılana Sıfırla"
 
+[node name="ResetAllButton" type="Button" parent="BottomButtons"]
+custom_minimum_size = Vector2(200, 50)
+theme_override_font_sizes/font_size = 20
+text = "Oyunu Sıfırla"
+
 [node name="BackButton" type="Button" parent="BottomButtons"]
 custom_minimum_size = Vector2(150, 50)
 theme_override_font_sizes/font_size = 20
 text = "Geri"
+
+[node name="ResetAllConfirm" type="ConfirmationDialog" parent="."]
+title = "Oyunu Sıfırla"
+initial_position = 2
+size = Vector2i(460, 160)
+ok_button_text = "Sıfırla"
+cancel_button_text = "Vazgeç"
+dialog_text = "Tüm istatistikler, tuş atamaları, ses ayarları ve karakter seçimi silinecek. Bu işlem geri alınamaz."
+dialog_autowrap = true

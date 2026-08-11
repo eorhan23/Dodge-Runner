@@ -18,8 +18,23 @@ Dodge Runner, Godot 4 motoru ve GDScript ile geliştirilen, tek dosyalık bir ma
 
 ```
 dodge-runner/
+├── README.md
+├── RELEASE_NOTES.md          # Sürüm notları
 ├── docs/                     # Dokümantasyon (bu dosyalar)
+│   ├── Problem.md            # Problem tanımı ve motivasyon
+│   ├── UserPersona.md        # Hedef kullanıcı profilleri
+│   ├── UserStories.md        # Kullanıcı hikayeleri ve kabul kriterleri
+│   ├── PRD.md / PRD_v1.md / PRD_v2.md   # Sürüm bazlı kapsam
+│   ├── Architecture.md       # Bu dosya
+│   ├── Modules.md            # Modül tasarımı ve sorumluluk dağılımı
+│   ├── Database.md           # Veri modeli (ConfigFile şeması)
+│   ├── API.md                # Dahili modül arayüzleri
+│   └── Roadmap.md            # Sürüm yol haritası
 ├── tasks/                    # Görev takibi
+│   ├── Tasks.md              # Fazlara bölünmüş görev listesi
+│   ├── Sprint.md             # Fazların sprint düzeyinde özeti
+│   ├── Prompts.md            # AI Agent yönlendirme yöntemi
+│   └── DefinitionOfDone.md   # "Bitti" ölçütleri
 ├── src/                      # Godot projesi kökü (project.godot burada)
 │   ├── project.godot
 │   ├── scenes/
@@ -62,10 +77,12 @@ dodge-runner/
 │       │   └── buffs/         # protection_buff.png, time_buff.png (v2)
 │       └── audio/             # ses varlıkları (v1)
 │           ├── sfx/
-│           │   ├── game/      # jump.mp3, death.mp3, get_buff.mp3
+│           │   ├── game/      # jump.mp3, death.mp3, hit.mp3, get_buff.mp3
 │           │   └── ui/        # click.mp3, start.mp3
 │           └── music/         # background_loop.mp3
 └── demo/                      # Sunum/demo materyalleri
+    ├── Demo.md                # Çalıştırma ve demo senaryosu
+    └── screenshots/
 ```
 
 Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burada tutulmaz — güncel durum için `tasks/Tasks.md`'deki işaretli kutucuklara bakılmalıdır.
@@ -91,6 +108,31 @@ Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burad
 - Her 10 saniyede bir, hız %8 artırılır (üst sınır 2.2×) ve spawn aralığı %8 kısaltılır (alt sınır orijinalin 0.5×'i) — bkz. `GameManager.gd`.
 - Üst/alt sınırlar sayesinde oyunun "oynanamaz" hale gelmesi engellenir. Bu değerler bir ilk ayar; gerçek oynanabilirlik hissi playtest ile doğrulanıp gerekirse ince ayar yapılacak (bkz. `Tasks.md` Faz 5).
 
+### 6.1. Kaçılamaz Durum Yasağı
+
+Zorluk artışının bir sınırı daha vardır: **hiçbir engel dizilimi, doğru oynayan bir oyuncunun ölmesine yol açmamalıdır.**
+
+Bunu sağlayan kural, engeller arası boşluğun **piksel değil zaman** cinsinden tanımlanmasıdır. Gerekçesi şudur: zıplama süresi `2 * |JUMP_VELOCITY| / GRAVITY` ile sabittir ve oyun hızından etkilenmez (zaman buff'ı da bilerek zıplamayı yavaşlatmaz). Buna karşılık engeller hızlandıkça sabit bir piksel mesafesini giderek daha kısa sürede kat eder. Dolayısıyla sabit piksel mesafesi, yüksek hızlarda kaçınılmaz ölüm üretir.
+
+Gereken boşluk sabit değildir; **önceki engelin türüne** bağlıdır. İkisine de aynı süreyi dayatmak oyunu gereksiz yere seyrekleştirir:
+
+| Önceki engel | Oyuncunun durumu | Gereken boşluk |
+|---|---|---|
+| Zemin | Zıplar; 0.8 sn havada kalır ve bu süre boyunca **eğilemez** | `GAP_AFTER_GROUND_SECONDS` (0.88 sn) |
+| Tavan | Eğilir; eğilme bırakılır bırakılmaz zıplayabilir | `GAP_AFTER_TOP_SECONDS` (0.38 sn) |
+
+Bu süreler tek başına yetmez. Oyun yavaşken süre cinsinden yeterli olan bir boşluk **piksel** olarak dar kalır; iki engel ekranda dip dibe görünür ve oyuncu ikisini tek bir küme gibi algılayıp hangisine nasıl tepki vereceğini ayırt edemez. Bu yüzden her boşluk ayrıca `MIN_VISUAL_GAP_PIXELS` kadar asgari bir piksel mesafesi tutar — yani boşluk, süre ve piksel ölçütlerinin **büyük olanına** göre belirlenir. Zaman ölçütü hızlı oyunu, piksel ölçütü yavaş oyunu korur.
+
+Uygulama `SpawnManager.gd` içinde üç parçalıdır:
+
+1. **`current_pair_gap()`** — çift engelin iki parçası arasındaki mesafeyi hızla orantılı üretir. Oyuncu önce zıplayıp inmek sonra eğilmek zorunda olduğu için zemin engeli kuralı geçerlidir.
+2. **`_start_timer(variant)`** — bir sonraki üretimin alt sınırını, üretilen grubun **son** engeline göre hesaplar. Çift engelin ikinci parçası üretim noktasının sağına konduğu için, alt sınır o parçanın gecikmesini de kapsar.
+3. **`_are_points_clear()`** — üretim anında konum kontrolü; üretim noktalarının yakınında engel veya buff varsa üretim `SPACING_RETRY_DELAY` kadar ertelenir.
+
+Üçüncü adım gereksiz görünebilir ama değildir: çift engelin ikinci parçası ve buff'lar üretim noktasının ötesine yerleştiği için, zamanlayıcı hesabı bu geometriyi tek başına garanti edemez. Buna karşılık konum kontrolü zamanlayıcıyla **birebir aynı** eşiği kullanmaz (`CLEARANCE_TOLERANCE`); eşit tutulduğunda sınırdaki her durum reddedilip üretim sürekli erteleniyor ve oyun belirgin şekilde seyrekleşiyordu.
+
+Tempo (`MIN_SPAWN_INTERVAL` / `MAX_SPAWN_INTERVAL`) ile adalet birbirinden ayrıdır: yukarıdaki alt sınırlar garantiyi tek başına sağladığı için, üretim aralığı denge amacıyla serbestçe sıkılaştırılabilir.
+
 ## 6.1. Buff Sistemi (v2)
 
 Üç tür × üç kademe = 9 buff. Türler arasında çıkma olasılığı eşittir; her türün kendi içinde güçlü kademe daha nadirdir (kademeler arası fark abartılı değildir).
@@ -98,11 +140,13 @@ Bu dosya listesinin hangi kısmının fiilen oluşturulduğu statik olarak burad
 | Tür | Kademe 1 | Kademe 2 | Kademe 3 |
 |---|---|---|---|
 | Kalkan | 1 dokunulmazlık | 2 dokunulmazlık | 3 dokunulmazlık |
-| Zaman | Hafif yavaşlatma | Orta yavaşlatma | Güçlü yavaşlatma |
+| Zaman | %20 yavaşlatma | %30 yavaşlatma | %40 yavaşlatma |
 | Skor Çarpanı | 2x | 3x | 4x |
 
 - **Görsel:** Buff'lar `Obstacle` gibi sağdan sola hareket eder ve `Area2D` ile toplanır. Arka plandaki daire koddan çizilir; rengi **kademeyi** belirtir (kademe 1 = yeşil, 2 = mavi, 3 = kırmızı). Aynı renk kodu sol üstteki aktif buff göstergesinde ve kalkan halkasında da kullanılır. Tür, dairenin üzerindeki ikondan (`protection_buff.png` / `time_buff.png`) veya koddan yazılan çarpan metninden (2x/3x/4x) anlaşılır — skor çarpanı için ayrı bir görsel varlık yoktur.
-- **Süre:** Tüm buff'ların bir süresi vardır; süre dolunca etki kalkar. Kalkan ayrıca sayılı dokunulmazlık taşır — haklar tükenirse veya süre dolarsa (hangisi önce olursa) kalkan kalkar.
+- **Süre:** Etki süresi yalnızca kademeye bağlıdır ve türden bağımsızdır (7 / 10 / 13 sn). Süre dolunca etki kalkar. Kalkan ayrıca sayılı dokunulmazlık taşır — haklar tükenirse veya süre dolarsa (hangisi önce olursa) kalkan kalkar.
+- **Konum:** Buff'ların engellerin içinde veya dibinde çıkmaması iki yönlü korunur: buff yerleştirilirken mevcut engellere bakılır, engel üretilirken de yakında buff varsa üretim kısa süre ertelenir. Tek yönlü kontrol yetersizdir, çünkü buff üretim noktasının sağına konur ve sonradan doğan bir engel onun yanına denk gelebilir.
+- **Zaman buff'ının sınırı:** Yavaşlatma yalnızca dış dünyaya uygulanır; zıplama fiziği ve skor kazanımı gerçek zamanda kalır. Aksi hâlde havada kalma süresi engellere göre orantısız kısalır ve buff, faydası olması gereken durumda oyunu zorlaştırırdı.
 - **Yönetim:** `BuffManager` (autoload) aktif buff'ları ve kalan sürelerini takip eder; etkiler `GameManager` (skor/zaman) ve `Obstacle` çarpışma yolu (kalkan) üzerinden uygulanır.
 
 ## 7. Kapsam Dışı Bırakılan Teknik Kararlar

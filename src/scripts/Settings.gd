@@ -2,6 +2,8 @@ extends Control
 
 @onready var rows_container: VBoxContainer = $RowsContainer
 @onready var reset_button: Button = $BottomButtons/ResetButton
+@onready var reset_all_button: Button = $BottomButtons/ResetAllButton
+@onready var reset_all_confirm: ConfirmationDialog = $ResetAllConfirm
 @onready var back_button: Button = $BottomButtons/BackButton
 @onready var music_slider: HSlider = $MusicRow/MusicSlider
 @onready var music_value: Label = $MusicRow/MusicValue
@@ -15,6 +17,8 @@ var _awaiting_button: Button = null
 
 func _ready() -> void:
 	reset_button.pressed.connect(_on_reset_pressed)
+	reset_all_button.pressed.connect(_on_reset_all_pressed)
+	reset_all_confirm.confirmed.connect(_on_reset_all_confirmed)
 	back_button.pressed.connect(_on_back_pressed)
 	music_slider.value_changed.connect(_on_music_changed)
 	sfx_slider.value_changed.connect(_on_sfx_changed)
@@ -111,6 +115,24 @@ func _on_sfx_drag_ended(_value_changed: bool) -> void:
 func _on_reset_pressed() -> void:
 	AudioManager.play_ui_click()
 	SettingsManager.reset_to_defaults()
+	_refresh_labels()
+	_refresh_sliders()
+
+
+func _on_reset_all_pressed() -> void:
+	# Geri alınamayan bir işlem olduğu için doğrudan uygulanmaz, önce onay istenir.
+	AudioManager.play_ui_click()
+	reset_all_confirm.popup_centered()
+
+
+func _on_reset_all_confirmed() -> void:
+	AudioManager.play_ui_click()
+	StatsManager.clear_all()
+	# Sıra önemli: iki yönetici de settings.cfg'yi paylaşır ve her biri kendi
+	# bölümünü silmeden önce dosyayı yeniden okur, böylece biri diğerinin
+	# temizliğini geri almaz.
+	SettingsManager.reset_to_defaults()
+	CharacterManager.reset_to_default()
 	_refresh_labels()
 	_refresh_sliders()
 

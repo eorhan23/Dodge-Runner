@@ -64,15 +64,24 @@ func get_sfx_volume() -> float:
 
 
 func set_music_volume(percent: float) -> void:
+	_reload_shared_config()
 	_config.set_value(SECTION_AUDIO, "music", percent)
 	_config.save(SAVE_PATH)
 	AudioManager.set_music_volume(percent)
 
 
 func set_sfx_volume(percent: float) -> void:
+	_reload_shared_config()
 	_config.set_value(SECTION_AUDIO, "sfx", percent)
 	_config.save(SAVE_PATH)
 	AudioManager.set_sfx_volume(percent)
+
+
+func _reload_shared_config() -> void:
+	# settings.cfg CharacterManager ile paylaşılır ve her modül kendi ConfigFile
+	# nesnesini tutar. Diske yazmadan önce dosyayı yeniden okumazsak, bellekteki
+	# eski kopyamız diğer modülün aradan geçen kaydını silerek geri alır.
+	_config.load(SAVE_PATH)
 
 
 func _apply_volumes() -> void:
@@ -105,6 +114,8 @@ func get_controls_hint() -> String:
 
 
 func set_binding(action: String, slot: int, keycode: int) -> void:
+	_reload_shared_config()
+
 	# Aynı tuş başka bir yuvada kullanılıyorsa oradan kaldır; iki eylem aynı
 	# tuşta kalırsa oyuncu ikisini birden tetikler.
 	for entry in SLOTS:
@@ -126,6 +137,7 @@ func reset_to_defaults() -> void:
 		_slots[key] = _defaults[key]
 
 	# Kayıtlı ayarları da temizle ki bir sonraki açılışta geri gelmesinler.
+	_reload_shared_config()
 	if _config.has_section(SECTION_INPUT):
 		_config.erase_section(SECTION_INPUT)
 	if _config.has_section(SECTION_AUDIO):

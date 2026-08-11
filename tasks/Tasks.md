@@ -46,7 +46,7 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 - [x] Placeholder görselleri (varsa) daha uygun sprite'larla değiştir.
 - [x] Zorluk eğrisini oynanabilirlik açısından test edip ince ayar yap.
 - [x] Kontrollerin ekranda kısa bir talimat olarak gösterilmesini sağla (oyun başında).
-- [ ] Demo için kısa bir oynanış kaydı/ekran görüntüsü al, `demo/` klasörüne ekle.
+- [x] Demo için kısa bir oynanış kaydı/ekran görüntüsü al, `demo/` klasörüne ekle.
 
 ## Faz 6 — Ana Menü ve Zorluk Seçimi
 
@@ -118,16 +118,57 @@ Bu liste `PRD.md` ve `Architecture.md` dokümanlarına dayanır. Her madde Claud
 - [x] `SpawnManager`'a buff üretimi ekle (engellerle çakışmayacak konumlarda).
 - [x] Nadirlik dağılımını uygula: türler arası eşit, her tür içinde güçlü kademe daha nadir.
 - [x] Ekranda aktif buff göstergesi (kalan süre / kalan dokunulmazlık).
-- [ ] Playtest ile buff süreleri, çıkma sıklığı ve etki güçlerini dengele.
+- [x] Playtest ile buff süreleri, çıkma sıklığı ve etki güçlerini dengele.
 
 > Not: Buff üretimi engel ritmine karışmasın diye ayrı bir `Timer` kullanır (7-12 sn aralık). Kademe ağırlıkları `SpawnManager.TIER_WEIGHTS` (45/33/22). Zaman yavaşlatma yalnızca dış dünyayı etkiler; zıplama fiziği ve skor kazanımı gerçek zamanda kalır.
+>
+> Denge ayarları: etki süresi türden bağımsız, yalnızca kademeye bağlıdır (`BuffManager.TIER_DURATIONS` — 7 / 10 / 13 sn). Yavaşlatma oranları 0.80 / 0.70 / 0.60'tır; daha düşük değerler, zıplama gerçek zamanda kaldığı için havada kalma süresini engellere göre orantısız kısaltıp oyunu zorlaştırıyordu. Buff ile engel arasındaki mesafe iki yönlü korunur: buff üretilirken mevcut engellere bakılır, engel üretilirken de yakında buff varsa üretim `BUFF_RETRY_DELAY` kadar ertelenir.
 
 ## Faz 15 — Son Cilalama ve Proje Kapanışı
 
 Projenin son fazı. Tüm sürümler (MVP, v1, v2) tamamlandıktan sonra yapılır.
 
-- [ ] Tüm dokümanları (`README.md`, `CLAUDE.md`, `docs/*.md`) baştan sona gözden geçir; güncelliğini yitirmiş, çelişkili veya eksik kalmış bütün metinleri düzelt.
-- [ ] Oyunu uçtan uca test et: her zorluk, her karakter, her buff türü/kademesi, menü akışları, ayarlar ve kalıcılık (kapat-aç).
-- [ ] Test sırasında çıkan hataları düzelt.
-- [ ] Genel oynanabilirlik dengesini son kez gözden geçir (zorluk eğrisi, buff sıklığı).
-- [ ] Demo için oynanış kaydı/ekran görüntüsü al, `demo/` klasörüne ekle (MVP Faz 5'ten devreden madde).
+### Doküman Tamamlama
+
+Staj programının standart MDD klasör yapısında yer alıp projede henüz bulunmayan dosyalar:
+
+- [x] `docs/UserPersona.md` — hedef kullanıcı profili.
+- [x] `docs/Modules.md` — modül/bileşen tasarımı ve sorumluluk dağılımı.
+- [x] `docs/Roadmap.md` — sürüm yol haritası (MVP → v1 → v2).
+- [x] `docs/Database.md` — veri modeli; bu projede veritabanı yerine yerel dosya kalıcılığı kullanıldığı için kapsam gerekçesi ve `ConfigFile` şeması.
+- [x] `docs/API.md` — endpoint planı; çevrimdışı proje olduğu için kapsam gerekçesi ve dahili modüller arası arayüzler.
+- [x] `tasks/Sprint.md` — fazların sprint planı olarak özeti.
+- [x] `tasks/DefinitionOfDone.md` — bir görevin "bitti" sayılma ölçütleri.
+- [x] `tasks/Prompts.md` — geliştirme sürecinde AI Agent'a verilen yönlendirmeler.
+- [x] `demo/Demo.md` — demo senaryosu ve çalıştırma talimatları.
+- [x] `RELEASE_NOTES.md` — sürüm notları.
+
+### Test, Düzeltme ve Kapanış
+
+- [x] Tüm dokümanları (`README.md`, `CLAUDE.md`, `docs/*.md`) baştan sona gözden geçir; güncelliğini yitirmiş, çelişkili veya eksik kalmış bütün metinleri düzelt.
+- [x] Ölü nokta hatasını düzelt: yüksek hızlarda çift engelin arası ve ardışık engel aralığı, kaçışı fiziksel olarak imkânsız kılacak kadar daralıyordu.
+- [x] Ayarlar ekranına tüm kalıcı veriyi silen "Oyunu Sıfırla" seçeneği ekle (onay adımıyla).
+- [x] Paylaşılan `settings.cfg` yazma çakışmasını düzelt: karakter seçimi ile ses/tuş ayarları birbirinin kaydını siliyordu.
+- [x] Oyunu Godot Editor'da uçtan uca elle test et: her zorluk, her karakter, her buff türü/kademesi, menü akışları, ayarlar ve kalıcılık (kapat-aç).
+- [x] Test sırasında çıkan diğer hataları düzelt.
+- [x] Genel oynanabilirlik dengesini son kez gözden geçir (zorluk eğrisi, buff sıklığı).
+- [x] Demo için oynanış kaydı/ekran görüntüsü al, `demo/screenshots/` klasörüne ekle (MVP Faz 5'ten devreden madde).
+
+> Not: Ölü nokta düzeltmesinin ilkesi, engeller arası boşluğu piksel yerine **zaman** cinsinden sabitlemektir. Zıplama süresi (`2 * |JUMP_VELOCITY| / GRAVITY` = 0.8 sn) oyun hızından bağımsız olduğu için, sabit piksel mesafesi hız arttıkça giderek kısalan bir süreye denk gelir ve bir noktada kaçış imkânsızlaşır.
+>
+> Gereken boşluk **önceki engelin türüne** bağlıdır: zemin engelinden sonra oyuncu 0.8 sn havada kalır ve eğilemez (`GAP_AFTER_GROUND_SECONDS` = 0.88 sn), tavan engelinden sonra ise eğilme bırakılır bırakılmaz zıplayabilir (`GAP_AFTER_TOP_SECONDS` = 0.38 sn). İkisine de aynı süreyi dayatmak oyunu gereksiz yere seyrekleştirir.
+>
+> Boşluk hem süre hem piksel cinsinden ölçülür ve **büyük olanı** geçerlidir (`MIN_VISUAL_GAP_PIXELS`). Yalnız zaman ölçütü kullanıldığında, oyun yavaşken süre olarak yeterli olan bir boşluk piksel olarak dar kalıyor ve engeller ekranda dip dibe görünüyordu; oyuncu ikisini tek küme gibi algılayıp tepki veremiyordu. Zaman ölçütü hızlı oyunu, piksel ölçütü yavaş oyunu korur.
+>
+> Koruma üç parçalıdır ve üçü de gereklidir:
+> 1. `current_pair_gap()` — çift engelin iki parçası arasındaki mesafeyi hızla orantılı üretir.
+> 2. `_start_timer(variant)` — bir sonraki üretimin alt sınırını grubun **son** engeline göre hesaplar. Çiftin ikinci parçası üretim noktasının sağına konduğu için bu gecikme hesaba katılmazsa sonraki engel onun dibine düşer. (Bu adım ilk denemede atlandığı için düzeltme sorunu çözmek yerine ağırlaştırmıştı.)
+> 3. `_are_points_clear()` — üretim anında konum kontrolü, son savunma hattı. Eşiği zamanlayıcıyla birebir aynı tutmak sınırdaki her durumu reddedip oyunu seyrekleştirdiği için `CLEARANCE_TOLERANCE` payı bırakılır.
+>
+> Tempo (`MIN_SPAWN_INTERVAL` / `MAX_SPAWN_INTERVAL`) adaletten ayrıdır: garanti alt sınırlarda olduğu için üretim aralığı denge amacıyla serbestçe ayarlanabilir.
+>
+> Doğrulama: oyun headless çalıştırılıp engellerin oyuncu hizasına varış aralıkları ölçüldü (zorluk başına 150 sn), erken ve geç oyun ayrı raporlandı. Kaçılamaz kombinasyon sayısı kolay/normal/zor için düzeltme öncesi 54/78/125 (en dar aralık 0.22 sn), düzeltme sonrası **0/0/0**. Son yoğunluk erken oyunda 0.67 / 0.73 / 0.90, geç oyunda 1.08 / 1.13 / 1.18 engel/sn.
+>
+> Denge ayarı yapılacaksa iki grup sabit ayrılmıştır: **tempo** (`MIN_SPAWN_INTERVAL` / `MAX_SPAWN_INTERVAL`) serbestçe değiştirilebilir, **adalet** (`GAP_AFTER_*`, `MIN_VISUAL_GAP_PIXELS`) fiziksel sınırlara dayanır ve düşürülürse kaçılamaz durumlar geri döner.
+>
+> Not: `settings.cfg` dosyasını `SettingsManager` ve `CharacterManager` ayrı `ConfigFile` nesneleriyle paylaşır. Bu yüzden her yazma işleminden önce dosya diskten yeniden okunur; aksi halde bir modülün bellekteki eski kopyası diğerinin kaydını geri alır. Bu hata, sıfırlama özelliği eklenirken yazılan doğrulama testiyle ortaya çıkmıştır.

@@ -39,6 +39,14 @@ func record_game(difficulty: int, score: int, survival_time: float) -> void:
 	_config.save(SAVE_PATH)
 
 
+func clear_all() -> void:
+	# Tüm zorlukların istatistiklerini siler. Dosyayı silmek yerine boş bir
+	# ConfigFile yazılır: dosya her zaman var olur, get_value çağrıları
+	# varsayılanlara düşer ve ilk çalıştırmadaki davranışın aynısı elde edilir.
+	_config = ConfigFile.new()
+	_config.save(SAVE_PATH)
+
+
 func get_stats(difficulty: int) -> Dictionary:
 	var section: String = SECTION_NAMES[difficulty]
 	var games_played: int = _config.get_value(section, "games_played", 0)

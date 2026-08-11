@@ -6,6 +6,10 @@ src/export_presets.cfg
 src/export_credentials.cfg
 *.translation
 
+# Godot motoru (portable exe). Kaynak koduna ait değildir ve ikili dosya olduğu
+# için git geçmişini kalıcı olarak şişirir; motor resmi siteden indirilir.
+Godot*.exe
+
 # OS specific
 .DS_Store
 Thumbs.db
